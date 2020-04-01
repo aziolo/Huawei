@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/similarityFragment">
+    <fragment
+        android:id="@+id/familyTreeFragment"
+        android:name="com.alemz.compare3.FamilyTreeFragment"
+        android:label="FamilyTreeFragment" />
+    <fragment
+        android:id="@+id/relationshipFragment"
+        android:name="com.alemz.compare3.RelationshipFragment"
+        android:label="RelationshipFragment" />
+    <fragment
+        android:id="@+id/similarityFragment"
+        android:name="com.alemz.compare3.SimilarityFragment"
+        android:label="SimilarityFragment" />
+</navigation>
