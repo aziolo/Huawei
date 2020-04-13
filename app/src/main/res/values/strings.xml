@@ -3,4 +3,20 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="family_tree">My family tree</string>
+
+
+    <!--New Member Activity -->
+    <string name="add_new_member">Add new family member …</string>
+    <string name="import_from_gallery">Import from gallery *</string>
+    <string name="name">Name *</string>
+    <string name="surname">Surname</string>
+    <string name="birth">Date of birth *</string>
+    <string name="father">Father</string>
+    <string name="mother">Mother</string>
+    <string name="married_to">Married to</string>
+    <string name="Connections">Family connections</string>
+    <string name="save">save</string>
+    <string name="info">* necessary</string>
+
 </resources>

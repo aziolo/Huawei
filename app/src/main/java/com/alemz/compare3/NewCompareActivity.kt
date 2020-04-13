@@ -25,6 +25,7 @@ import com.huawei.hiai.vision.face.FaceComparator
 import com.huawei.hiai.vision.visionkit.common.Frame
 import com.huawei.hiai.vision.visionkit.face.FaceCompareResult
 
+@Suppress("DEPRECATION")
 class NewCompareActivity : AppCompatActivity() {
 
     companion object{
@@ -132,15 +133,15 @@ class NewCompareActivity : AppCompatActivity() {
         cursor.close()
         if (isPerson1) {
             mBitmapPerson1 = BitmapFactory.decodeFile(picturePath)
-            Log.e("hahahahahhahahah", mBitmapPerson1.toString())
-            mHander.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON1)
+            Log.e("Bitmap person 1", mBitmapPerson1.toString())
+            mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON1)
         } else {
             mBitmapPerson2 = BitmapFactory.decodeFile(picturePath)
-            mHander.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON2)
+            mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON2)
         }
     }
 
-    private val mHander: Handler = @SuppressLint("HandlerLeak")
+    private val mHandler: Handler = @SuppressLint("HandlerLeak")
     object : Handler() {
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
@@ -207,7 +208,7 @@ class NewCompareActivity : AppCompatActivity() {
             val msg = Message()
             msg.what = TYPE_SHOW_RESULT
             msg.obj = result
-            mHander.sendMessage(msg)
+            mHandler.sendMessage(msg)
         }
     })
 
