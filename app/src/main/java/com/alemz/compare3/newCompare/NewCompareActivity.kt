@@ -20,8 +20,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import com.alemz.compare3.R
 import com.alemz.compare3.R.id.*
 import com.huawei.hiai.vision.common.ConnectionCallback
@@ -50,6 +52,8 @@ class NewCompareActivity : AppCompatActivity() {
     private var mImageViewPerson1: ImageView? = null
     private var mImageViewPerson2: ImageView? = null
     private var mTxtViewResult: TextView? = null
+    private lateinit var mCardViewCheck: CardView
+    private lateinit var mCardViewResult: CardView
     private var isPerson1 = false
     private val mWaitResult = Object()
     private var mFaceComparator: FaceComparator? = null
@@ -61,10 +65,14 @@ class NewCompareActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_compare)
-
         mImageViewPerson1 = findViewById(R.id.imgViewPerson1)
         mImageViewPerson2 = findViewById(R.id.imgViewPerson2)
         mTxtViewResult = findViewById(R.id.result)
+        mCardViewCheck = findViewById<CardView>(R.id.check_card)
+        mCardViewResult = findViewById<CardView>(R.id.result_card)
+
+
+    //    mCardViewResult = findViewById(R.id.result_card)
 
         VisionBase.init(this, object : MediaBrowser.ConnectionCallback(), ConnectionCallback {
             override fun onServiceConnect() {
@@ -120,11 +128,22 @@ class NewCompareActivity : AppCompatActivity() {
                 dispatchTakePictureIntent()
             }
             btnstarCompare -> {
-                if(Indicator_1 && Indicator_2)
+                if(Indicator_1 && Indicator_2) {
                     startCompare()
+                    mCardViewCheck.isVisible = false
+                    mCardViewResult.isVisible = true
+                }
                 else
                     toastx("Choose photos to start compare")
             }
+
+            btn_Repeat -> {
+                mCardViewCheck.isVisible = false
+                mCardViewResult.isVisible = true
+            }
+            btn_Accept -> {
+            }
+
 
             else -> {
             }
@@ -268,10 +287,15 @@ class NewCompareActivity : AppCompatActivity() {
                 }
                 TYPE_SHOW_RESULT -> {
                     val result = msg.obj as FaceCompareResult
+
+                    val result_percent = result.socre*100
+                    val result_float:String = String.format("%.2f",result_percent).toString()
+                    mTxtViewResult!!.text = " $result_float %"
+
                     if (result.isSamePerson) {
-                        mTxtViewResult!!.text = "The same Person !!  and score: " + result.socre
+    //                    mTxtViewResult!!.text = "The same Person !!  and score: " + result.socre
                     } else {
-                        mTxtViewResult!!.text = "Not the same Person !! and score:" + result.socre
+    //                    mTxtViewResult!!.text = "Not the same Person !! and score:" + result.socre
                     }
                 }
                 else -> {
@@ -281,7 +305,8 @@ class NewCompareActivity : AppCompatActivity() {
     }
 
     private fun startCompare() {
-        mTxtViewResult!!.text = "Is the same Person ??? "
+  //      mTxtViewResult!!.text = "Is the same Person ??? "
+        mTxtViewResult!!.text = " "
         synchronized(mWaitResult) {
             mWaitResult.notifyAll() }
     }
