@@ -9,9 +9,7 @@ import com.alemz.compare3.repositories.MemberRepository
 class FTViewModel (application: Application): AndroidViewModel(application)  {
     private var memberRepository: MemberRepository = MemberRepository(application)
 
-
     fun getAll(): LiveData<List<FamilyMember>> {
         return memberRepository.getAll()
     }
-
 }

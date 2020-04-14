@@ -60,7 +60,7 @@ class FamilyTreeFragment : Fragment() {
 
 
 
-       // graphView.adapter = adapter
+        graphView.adapter = adapter
         // set the algorithm here
         // set the algorithm here
         val configuration = BuchheimWalkerConfiguration.Builder()
@@ -85,7 +85,7 @@ class FamilyTreeFragment : Fragment() {
     }
     private fun drawFamilyTree(view: View) {
         viewModel.getAll().observe(viewLifecycleOwner, Observer<List<FamilyMember>> { t ->
-            adapter.setMember(t)
+            if(!t.isNullOrEmpty()) adapter.setMember(t)
         })
     }
 
