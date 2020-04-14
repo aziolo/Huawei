@@ -4,11 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
-import com.alemz.compare3.data.AppDataBase
-import com.alemz.compare3.data.FamilyMember
-import com.alemz.compare3.data.FamilyMemberDao
+import com.alemz.compare3.data.*
 
 
 const val TAG = "Family Member Repository"
@@ -20,7 +17,7 @@ class MemberRepository (application: Application) {
 
     init {
         val db: AppDataBase = AppDataBase.invoke(application.applicationContext)
-        dao = db.FamilyMemberDao()
+        dao = db.familyMemberDao()
         con = application.applicationContext
         allMembers = dao.getAll()
     }
@@ -41,6 +38,7 @@ class MemberRepository (application: Application) {
 
 }
 
+
 private class InsertMemberAsyncTask(val dao: FamilyMemberDao, val con: Context) :
         AsyncTask<FamilyMember, Unit, Unit>() {
         override fun doInBackground(vararg params: FamilyMember) {
@@ -53,7 +51,7 @@ private class InsertMemberAsyncTask(val dao: FamilyMemberDao, val con: Context) 
         }
     }
 
-private class GetAllAsyncTask(val dao: FamilyMemberDao) :
+class GetAllAsyncTask(val dao: FamilyMemberDao) :
     AsyncTask<Unit, Unit, LiveData<List<FamilyMember>>>() {
     override fun doInBackground(vararg params: Unit?): LiveData<List<FamilyMember>> {
         return dao.getAll()

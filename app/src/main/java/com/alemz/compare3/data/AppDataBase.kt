@@ -8,11 +8,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 
 @Database(
-    entities = [FamilyMember::class],
+    entities = [FamilyMember::class, Similarity::class],
     version = 1
 )
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun FamilyMemberDao(): FamilyMemberDao
+    abstract fun similarityDao(): SimilarityDao
+    abstract fun familyMemberDao(): FamilyMemberDao
     companion object {
 
         //volatile guarantee that the value that is being read comes from the main memory not the cpu-cache, read the newest value from memory

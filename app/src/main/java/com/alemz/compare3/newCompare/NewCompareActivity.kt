@@ -1,4 +1,4 @@
-package com.alemz.compare3
+package com.alemz.compare3.newCompare
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -22,6 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import com.alemz.compare3.R
 import com.alemz.compare3.R.id.*
 import com.huawei.hiai.vision.common.ConnectionCallback
 import com.huawei.hiai.vision.common.VisionBase
@@ -94,7 +95,8 @@ class NewCompareActivity : AppCompatActivity() {
                 isPerson1 = true
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
-                requestCode = REQUEST_PHOTO_GALLERY
+                requestCode =
+                    REQUEST_PHOTO_GALLERY
                 startActivityForResult(intent, requestCode)
             }
             btnPerson2_Gallery -> {
@@ -103,7 +105,8 @@ class NewCompareActivity : AppCompatActivity() {
                 isPerson1 = false
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
-                requestCode = REQUEST_PHOTO_GALLERY
+                requestCode =
+                    REQUEST_PHOTO_GALLERY
                 startActivityForResult(intent, requestCode)
             }
             btnPerson1_Camera -> {
@@ -149,7 +152,9 @@ class NewCompareActivity : AppCompatActivity() {
                     )
                     toastx(photoURI.toString())
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_PHOTO_CAMERA)
+                    startActivityForResult(takePictureIntent,
+                        REQUEST_PHOTO_CAMERA
+                    )
                 }
             }
         }
@@ -206,7 +211,9 @@ class NewCompareActivity : AppCompatActivity() {
 //            }
 
                     val selectedImage = data.data
-                    val type = data.getIntExtra("type", TYPE_CHOOSE_PHOTO_CODE4PERSON1)
+                    val type = data.getIntExtra("type",
+                        TYPE_CHOOSE_PHOTO_CODE4PERSON1
+                    )
                     Log.d(
                         TAG,
                         "select uri:" + selectedImage.toString() + "type: " + type
@@ -303,7 +310,8 @@ class NewCompareActivity : AppCompatActivity() {
             val result = faceComparator.convertResult(jsonObject)
             Log.d(TAG, "convertResult end !!!! ")
             val msg = Message()
-            msg.what = TYPE_SHOW_RESULT
+            msg.what =
+                TYPE_SHOW_RESULT
             msg.obj = result
             mHandler.sendMessage(msg)
         }
