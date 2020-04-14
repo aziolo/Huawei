@@ -19,4 +19,10 @@
     <string name="save">save</string>
     <string name="info">* necessary</string>
 
+    <!--New Compare Activity -->
+    <string name="new_compare">New Compare …</string>
+    <string name="check_similarity">Check similarity</string>
+    <string name="result_textView">Result :</string>
+    <string name="btn_repeat">Repeat</string>
+    <string name="btn_accept">Accept</string>
 </resources>
