@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".createMember.CreateMemberActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:onClick="onClickButton">
+
+                <TextView
+                    android:id="@+id/text_title_new"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/add_new_member"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/new_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_title_new"
+                    app:srcCompat="@drawable/ic_accessibility_black_24dp" />
+
+                <TextView
+                    android:id="@+id/text_import"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_from_gallery"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/new_photo" />
+
+                <ImageButton
+                    android:id="@+id/import_from_gallery_new"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/rounded_gallery"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/ic_photo_library_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_import"
+                    app:layout_constraintStart_toEndOf="@+id/text_import" />
+
+
+                <TextView
+                    android:id="@+id/text_name"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/name"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_import" />
+
+                <TextView
+                    android:id="@+id/text_surname"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/surname"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_name" />
+
+                <TextView
+                    android:id="@+id/text_birth"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/birth"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_surname" />
+
+
+                <TextView
+                    android:id="@+id/text_connections"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/Connections"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_birth" />
+
+                <TextView
+                    android:id="@+id/text_mother"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/mother"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_father" />
+
+                <TextView
+                    android:id="@+id/text_father"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/father"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_connections" />
+
+                <TextView
+                    android:id="@+id/text_married"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/married_to"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_mother" />
+
+
+                <EditText
+                    android:id="@+id/input_date_of_birth"
+                    style="@style/ItemStyle"
+                    android:ems="10"
+                    android:inputType="date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_surname" />
+
+                <EditText
+                    android:id="@+id/input_surname"
+                    style="@style/ItemStyle"
+                    android:ems="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_name" />
+
+                <Spinner
+                    android:id="@+id/input_father"
+                    style="@style/ItemStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_connections" />
+
+                <Spinner
+                    android:id="@+id/input_mother"
+                    style="@style/ItemStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_father" />
+
+                <Spinner
+                    android:id="@+id/input_married"
+                    style="@style/ItemStyle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_mother" />
+
+                <ImageButton
+                    android:id="@+id/choose_birth_date"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_gallery"
+                    android:onClick="onClickButton"
+                    android:src="@drawable/ic_event_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/input_date_of_birth"
+                    app:layout_constraintEnd_toStartOf="@+id/input_date_of_birth" />
+
+                <Button
+                    android:id="@+id/button_save_member"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/rounded_edge"
+                    android:onClick="onClickButton"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/info"
+                    tools:text="@string/save" />
+
+
+                <EditText
+                    android:id="@+id/input_name"
+                    style="@style/ItemStyle"
+                    android:layout_width="170dp"
+                    android:layout_marginTop="24dp"
+                    android:ems="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_import" />
+
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/info"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="italic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_married" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

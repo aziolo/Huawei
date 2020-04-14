@@ -8,4 +8,75 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--my own toolbar theme  -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="NewActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+
+    </style>
+
+    <style name="TitleStyle" >
+        <item name="android:textSize">40dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="ButtonStyleLogin">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_width">250dp</item>
+    </style>
+
+    <style name="ButtonStyleSignIn">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_width">250dp</item>
+    </style>
+
+    <style name="NameStyle">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="ItemStyle">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_width">130dp</item>
+    </style>
+
+    <style name="StatisticPrimaryTitleStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <style name="StatisticSecondaryTitleStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="statisticValueStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+
 </resources>

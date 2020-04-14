@@ -4,7 +4,7 @@
     app:startDestination="@id/similarityFragment">
     <fragment
         android:id="@+id/familyTreeFragment"
-        android:name="com.alemz.compare3.FamilyTreeFragment"
+        android:name="com.alemz.compare3.familyTree.FamilyTreeFragment"
         android:label="FamilyTreeFragment" />
     <fragment
         android:id="@+id/relationshipFragment"
