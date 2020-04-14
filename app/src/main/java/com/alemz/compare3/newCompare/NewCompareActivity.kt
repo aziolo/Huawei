@@ -49,11 +49,13 @@ class NewCompareActivity : AppCompatActivity() {
     }
     private var mBitmapPerson1: Bitmap? = null
     private var mBitmapPerson2: Bitmap? = null
-    private var mImageViewPerson1: ImageView? = null
-    private var mImageViewPerson2: ImageView? = null
+    private lateinit var mImageViewPerson1: ImageView
+    private lateinit var mImageViewPerson2: ImageView
     private var mTxtViewResult: TextView? = null
     private lateinit var mCardViewCheck: CardView
     private lateinit var mCardViewResult: CardView
+    private lateinit var mCardViewPerson1: CardView
+    private lateinit var mCardViewPerson2: CardView
     private var isPerson1 = false
     private val mWaitResult = Object()
     private var mFaceComparator: FaceComparator? = null
@@ -70,6 +72,8 @@ class NewCompareActivity : AppCompatActivity() {
         mTxtViewResult = findViewById(R.id.result)
         mCardViewCheck = findViewById<CardView>(R.id.check_card)
         mCardViewResult = findViewById<CardView>(R.id.result_card)
+        mCardViewPerson1 = findViewById<CardView>(R.id.person_1_card)
+        mCardViewPerson2 = findViewById<CardView>(R.id.person_2_card)
 
 
     //    mCardViewResult = findViewById(R.id.result_card)
@@ -132,14 +136,22 @@ class NewCompareActivity : AppCompatActivity() {
                     startCompare()
                     mCardViewCheck.isVisible = false
                     mCardViewResult.isVisible = true
+                    mCardViewPerson1.isVisible = false
+                    mCardViewPerson2.isVisible = false
                 }
                 else
                     toastx("Choose photos to start compare")
             }
 
             btn_Repeat -> {
-                mCardViewCheck.isVisible = false
-                mCardViewResult.isVisible = true
+                mCardViewCheck.isVisible = true
+                mCardViewResult.isVisible = false
+                mCardViewPerson1.isVisible = true
+                mCardViewPerson2.isVisible = true
+                mImageViewPerson1.setImageResource(R.drawable.ic_accessibility_black_24dp)
+                mImageViewPerson2.setImageResource(R.drawable.ic_accessibility_black_24dp)
+                Indicator_1 = false
+                Indicator_2 = false
             }
             btn_Accept -> {
             }
@@ -293,10 +305,13 @@ class NewCompareActivity : AppCompatActivity() {
                     mTxtViewResult!!.text = " $result_float %"
 
                     if (result.isSamePerson) {
+                        toastx("This is the same person. Change photos !")
     //                    mTxtViewResult!!.text = "The same Person !!  and score: " + result.socre
-                    } else {
-    //                    mTxtViewResult!!.text = "Not the same Person !! and score:" + result.socre
                     }
+//                    else {
+//                        toastx("The same Person")
+//                        mTxtViewResult!!.text = "Not the same Person !! and score:" + result.socre
+//                    }
                 }
                 else -> {
                 }

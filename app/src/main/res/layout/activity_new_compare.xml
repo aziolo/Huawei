@@ -36,19 +36,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_title_new2" />
 
-    <ImageButton
-        android:id="@+id/btnPerson2_Gallery"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_gallery"
-        android:onClick="onClickButton"
-        android:src="@drawable/ic_photo_library_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgViewPerson2"
-        app:layout_constraintStart_toEndOf="@+id/imgViewPerson2"
-        app:layout_constraintTop_toTopOf="@+id/imgViewPerson2" />
-
     <TextView
         android:id="@+id/textView_Person2"
         android:layout_width="wrap_content"
@@ -61,19 +48,6 @@
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgViewPerson1" />
-
-    <ImageButton
-        android:id="@+id/btnPerson1_Camera"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_gallery"
-        android:onClick="onClickButton"
-        android:src="@drawable/ic_camera_enhance_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgViewPerson1"
-        app:layout_constraintStart_toEndOf="@+id/btnPerson1_Gallery"
-        app:layout_constraintTop_toTopOf="@+id/imgViewPerson1" />
 
     <ImageView
         android:id="@+id/imgViewPerson1"
@@ -95,31 +69,96 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_Person2"
         app:srcCompat="@drawable/ic_accessibility_black_24dp" />
 
-    <ImageButton
-        android:id="@+id/btnPerson2_Camera"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_gallery"
-        android:onClick="onClickButton"
-        android:src="@drawable/ic_camera_enhance_black_24dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/person_2_card"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgViewPerson2"
-        app:layout_constraintStart_toEndOf="@+id/btnPerson2_Gallery"
-        app:layout_constraintTop_toTopOf="@+id/imgViewPerson2" />
+        app:layout_constraintStart_toEndOf="@+id/imgViewPerson2"
+        app:layout_constraintTop_toTopOf="@+id/imgViewPerson2">>
 
-    <ImageButton
-        android:id="@+id/btnPerson1_Gallery"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_weight="1"
-        android:background="@drawable/rounded_gallery"
-        android:onClick="onClickButton"
-        android:src="@drawable/ic_photo_library_black_24dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btnPerson2_Gallery"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_gallery"
+                android:onClick="onClickButton"
+                android:src="@drawable/ic_photo_library_black_24dp"
+                app:layout_constraintStart_toEndOf="@+id/btnPerson2_Camera"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnPerson2_Camera"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_gallery"
+                android:onClick="onClickButton"
+                android:src="@drawable/ic_camera_enhance_black_24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/person_1_card"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgViewPerson1"
         app:layout_constraintStart_toEndOf="@+id/imgViewPerson1"
-        app:layout_constraintTop_toTopOf="@+id/imgViewPerson1" />
+        app:layout_constraintTop_toTopOf="@+id/imgViewPerson1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btnPerson1_Gallery"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_gallery"
+                android:onClick="onClickButton"
+                android:src="@drawable/ic_photo_library_black_24dp"
+                app:layout_constraintStart_toEndOf="@+id/btnPerson1_Camera"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btnPerson1_Camera"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_gallery"
+                android:onClick="onClickButton"
+                android:src="@drawable/ic_camera_enhance_black_24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/check_card"
@@ -199,7 +238,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="127dp"
                 android:layout_height="63dp"
-                android:layout_marginStart="128dp"
+                android:layout_marginStart="96dp"
                 android:layout_marginTop="32dp"
                 android:background="@drawable/rounded_edge"
                 android:onClick="onClickButton"
@@ -231,7 +270,7 @@
                 android:layout_weight="0"
                 android:text="@string/result_textView"
                 android:textColor="@android:color/background_light"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -244,7 +283,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:textColor="@android:color/background_light"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 app:layout_constraintStart_toEndOf="@+id/textView_result"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
