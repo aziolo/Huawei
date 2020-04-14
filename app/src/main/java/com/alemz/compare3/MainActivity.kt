@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alemz.compare3.data.AppDataBase
 import com.alemz.compare3.familyTree.FamilyTreeFragment
+import com.alemz.compare3.similarity.SimilarityFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("DEPRECATION")

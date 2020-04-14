@@ -4,6 +4,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="family_tree">My family tree</string>
+    <string name="similarity"> Me and my family latest similarity</string>
+    <string name="date"> date: </string>
 
 
     <!--New Member Activity -->
@@ -12,11 +14,13 @@
     <string name="name">Name *</string>
     <string name="surname">Surname</string>
     <string name="birth">Date of birth *</string>
-    <string name="father">Father</string>
-    <string name="mother">Mother</string>
-    <string name="married_to">Married to</string>
+    <string name="father">Father **</string>
+    <string name="mother">Mother **</string>
+    <string name="married_to">Married to **</string>
     <string name="Connections">Family connections</string>
     <string name="save">save</string>
-    <string name="info">* necessary</string>
+    <string name="info">*necessary &#xA;&#xD;**min one of them need to be selected</string>
+
+
 
 </resources>

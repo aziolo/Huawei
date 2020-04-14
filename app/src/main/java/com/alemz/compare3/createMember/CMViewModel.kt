@@ -11,6 +11,8 @@ class CMViewModel (application: Application): AndroidViewModel(application) {
     fun insertMember(member: FamilyMember){
         memberRepository.insert(member)
     }
-
+    fun getList(): List<String> {
+        return memberRepository.getList()
+    }
 
 }

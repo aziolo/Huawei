@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/familyTreeFragment"
+        android:icon="@drawable/ic_accessibility_black_24dp"
+        android:title="Family tree"/>
+    <item
         android:id="@+id/similarityFragment"
         android:icon="@drawable/ic_accessibility_black_24dp"
         android:title="Symilarity"/>
 
-    <item
-        android:id="@+id/familyTreeFragment"
-        android:icon="@drawable/ic_accessibility_black_24dp"
-        android:title="Family tree"/>
 </menu>

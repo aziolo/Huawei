@@ -28,6 +28,17 @@ class MemberRepository (application: Application) {
         ).execute().get()
     }
 
+    fun getList(): List<String> {
+        val list = mutableListOf<String>()
+        val a =  GetListAsyncTask(
+            dao
+        ).execute().get()
+        for (i in a.indices){
+            list[i] = a[i].firstName+" "+a[i].lastName
+        }
+        list.plusAssign("none")
+        return list
+    }
 
     fun insert(member: FamilyMember) {
         InsertMemberAsyncTask(
@@ -51,10 +62,17 @@ private class InsertMemberAsyncTask(val dao: FamilyMemberDao, val con: Context) 
         }
     }
 
-class GetAllAsyncTask(val dao: FamilyMemberDao) :
+class GetAllAsyncTask(private val dao: FamilyMemberDao) :
     AsyncTask<Unit, Unit, LiveData<List<FamilyMember>>>() {
     override fun doInBackground(vararg params: Unit?): LiveData<List<FamilyMember>> {
         return dao.getAll()
+    }
+}
+
+class GetListAsyncTask(private val dao: FamilyMemberDao) :
+    AsyncTask<Unit, Unit, List<FamilyMember>>() {
+    override fun doInBackground(vararg params: Unit?): List<FamilyMember> {
+        return dao.getList()
     }
 }
 

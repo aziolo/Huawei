@@ -12,6 +12,8 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.alemz.compare3.R
@@ -29,6 +31,7 @@ class CreateMemberActivity : AppCompatActivity() {
     private var bitmap: Bitmap? = null
     private lateinit var photo: ByteArray
     private lateinit var selectedTime: String
+    private lateinit var list: List<String>
     private val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     private val viewModel: CMViewModel by lazy {
@@ -40,6 +43,9 @@ class CreateMemberActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_member)
+        list = viewModel.getList()
+        setSpinners()
+
     }
 
     fun onClickButton(view: View) {
@@ -121,12 +127,12 @@ class CreateMemberActivity : AppCompatActivity() {
             Toast.makeText(this,"Please select the photo. ", Toast.LENGTH_SHORT).show()
         }
         val id: Long = UUID.randomUUID().mostSignificantBits
-        val firstName: String = input_name.text.toString()
-        val lastName: String? = input_surname.text.toString()
-        val birth: String = input_date_of_birth.text.toString()
-        val father: String? = input_father.toString()
-        val mother: String? = input_mother.toString()
-        val marriedTo: String? = input_married.toString()
+        val firstName = input_name.text.toString()
+        val lastName = input_surname.text.toString()
+        val birth = input_date_of_birth.text.toString()
+        val father = input_father.toString()
+        val mother = input_mother.toString()
+        val marriedTo = input_married.toString()
 
         if (firstName.isNotEmpty() && birth.isNotEmpty() && photo.isNotEmpty()) {
             val newMember = FamilyMember(id, firstName, lastName, birth, father, mother, marriedTo, photo)
@@ -149,6 +155,47 @@ class CreateMemberActivity : AppCompatActivity() {
         val newWidthPx = floor(currentWidth * scaleFactor).toInt()
         val newHeightPx = floor(currentHeight * scaleFactor).toInt()
         return Bitmap.createScaledBitmap(input, newWidthPx, newHeightPx, true)
+    }
+    private fun setSpinners(){
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, list)
+        input_father.adapter = adapter
+        input_mother.adapter = adapter
+        input_married.adapter = adapter
+
+        input_father.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {}
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        input_mother.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {}
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        input_married.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {}
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
     }
 
     companion object{

@@ -1,4 +1,4 @@
-package com.alemz.compare3
+package com.alemz.compare3.familyTree
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
+import com.alemz.compare3.R
 import com.alemz.compare3.data.FamilyMember
-import com.alemz.compare3.familyTree.FTViewModel
-import com.alemz.compare3.familyTree.FamilyTreeFragment
 import de.blox.graphview.BaseGraphAdapter
 import de.blox.graphview.Graph
 import de.blox.graphview.ViewHolder

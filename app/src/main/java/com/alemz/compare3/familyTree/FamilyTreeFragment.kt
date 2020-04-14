@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.alemz.compare3.GraphAdapter
 import com.alemz.compare3.R
-import com.alemz.compare3.SimpleViewHolder
 import com.alemz.compare3.createMember.CreateMemberActivity
 import com.alemz.compare3.data.FamilyMember
 import de.blox.graphview.*
