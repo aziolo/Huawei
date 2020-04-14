@@ -306,6 +306,10 @@ class NewCompareActivity : AppCompatActivity() {
 
                     if (result.isSamePerson) {
                         toastx("This is the same person. Change photos !")
+                        mCardViewCheck.isVisible = true
+                        mCardViewResult.isVisible = false
+                        mCardViewPerson1.isVisible = true
+                        mCardViewPerson2.isVisible = true
     //                    mTxtViewResult!!.text = "The same Person !!  and score: " + result.socre
                     }
 //                    else {

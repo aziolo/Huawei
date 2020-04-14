@@ -19,7 +19,9 @@
     <string name="married_to">Married to **</string>
     <string name="Connections">Family connections</string>
     <string name="save">save</string>
-    <string name="info">*necessary &#xA;&#xD;**min one of them need to be selected</string>
+    <string name="info_TODELETE">*necessary &#xA;&#xD;**min one of them need to be selected</string>
+    <string name="info">*necessary</string>
+    <string name="info_2">**min one of them need to be selected</string>
 
 
 
