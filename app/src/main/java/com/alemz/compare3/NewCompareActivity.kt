@@ -11,6 +11,7 @@ import android.media.browse.MediaBrowser
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
@@ -18,22 +19,30 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
+import com.alemz.compare3.R.id.*
 import com.huawei.hiai.vision.common.ConnectionCallback
 import com.huawei.hiai.vision.common.VisionBase
 import com.huawei.hiai.vision.face.FaceComparator
 import com.huawei.hiai.vision.visionkit.common.Frame
 import com.huawei.hiai.vision.visionkit.face.FaceCompareResult
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("DEPRECATION")
 class NewCompareActivity : AppCompatActivity() {
 
     companion object{
         private const val TAG = "FaceCompare"
-        private const val PHOTO_REQUEST_GALLERY = 2
+        private const val REQUEST_PHOTO_GALLERY = 2
         private const val TYPE_CHOOSE_PHOTO_CODE4PERSON1 = 10
         private const val TYPE_CHOOSE_PHOTO_CODE4PERSON2 = 11
         private const val TYPE_SHOW_RESULT = 12
+        private const val REQUEST_PHOTO_CAMERA = 1
     }
     private var mBitmapPerson1: Bitmap? = null
     private var mBitmapPerson2: Bitmap? = null
@@ -43,6 +52,9 @@ class NewCompareActivity : AppCompatActivity() {
     private var isPerson1 = false
     private val mWaitResult = Object()
     private var mFaceComparator: FaceComparator? = null
+    private var Indicator_1: Boolean = false
+    private var Indicator_2: Boolean = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +74,8 @@ class NewCompareActivity : AppCompatActivity() {
                 Log.i(TAG, "onServiceDisconnect")
             }
         })
+        requestPermissionsCamera()
         mThread.start()
-
-        requestPermissions()
     }
 
     override fun onDestroy() {
@@ -77,28 +88,93 @@ class NewCompareActivity : AppCompatActivity() {
     fun onClickButton(view: View) {
         val requestCode: Int
         when (view.id) {
-            R.id.btnPerson1 -> {
-                Log.d(TAG, "btnPerson1")
+            btnPerson1_Gallery -> {
+                toastx("Gallery")
+                Log.d(TAG, "btnPerson1_Gallery")
                 isPerson1 = true
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
-                requestCode = PHOTO_REQUEST_GALLERY
+                requestCode = REQUEST_PHOTO_GALLERY
                 startActivityForResult(intent, requestCode)
             }
-            R.id.btnPerson2 -> {
-                Log.d(TAG, "btnPerson2")
+            btnPerson2_Gallery -> {
+                toastx("Gallery")
+                Log.d(TAG, "btnPerson2_Gallery")
                 isPerson1 = false
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
-                requestCode = PHOTO_REQUEST_GALLERY
+                requestCode = REQUEST_PHOTO_GALLERY
                 startActivityForResult(intent, requestCode)
             }
-            R.id.btnstarCompare -> {
-                startCompare()
+            btnPerson1_Camera -> {
+                toastx("Camera")
+                isPerson1 = true
+                dispatchTakePictureIntent()
             }
+            btnPerson2_Camera -> {
+                toastx("Camera")
+                isPerson1 = false
+                dispatchTakePictureIntent()
+            }
+            btnstarCompare -> {
+                if(Indicator_1 && Indicator_2)
+                    startCompare()
+                else
+                    toastx("Choose photos to start compare")
+            }
+
             else -> {
             }
         }
+    }
+    private fun dispatchTakePictureIntent() {
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            takePictureIntent.resolveActivity(packageManager)?.also {
+//                startActivityForResult(takePictureIntent, REQUEST_PHOTO_CAMERA)
+//
+//            }
+//        }
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    null
+                }
+                photoFile?.also {
+                    val photoURI = FileProvider.getUriForFile(
+                        this,
+                        "com.alemz.compare3",
+                        it
+                    )
+                    toastx(photoURI.toString())
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_PHOTO_CAMERA)
+                }
+            }
+        }
+    }
+    lateinit var currentPhotoPath: String
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+
+    private fun toastx(text:String){
+        val toast = Toast.makeText(applicationContext,text,Toast.LENGTH_SHORT)
+        toast.show()
+
     }
 
     override fun onActivityResult(
@@ -107,18 +183,39 @@ class NewCompareActivity : AppCompatActivity() {
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
+        toastx(REQUEST_PHOTO_CAMERA.toString())
         if (resultCode == Activity.RESULT_OK) {
             if (data == null) {
+                toastx("No Data")
                 return
             }
-            val selectedImage = data.data
-            val type = data.getIntExtra("type", TYPE_CHOOSE_PHOTO_CODE4PERSON1)
-            Log.d(TAG,
-                "select uri:" + selectedImage.toString() + "type: " + type
-            )
-            getBitmap(type, selectedImage!!)
-        }
+
+
+            if (isPerson1)
+                Indicator_1 = true
+            else if (!isPerson1)
+                Indicator_2 = true
+//
+//            if (requestCode == REQUEST_PHOTO_CAMERA){
+//                val imageBitmap = data.extras?.get("data") as Bitmap
+//                if (isPerson1)
+//                    mImageViewPerson1?.setImageBitmap(imageBitmap)
+//                else if (!isPerson1)
+//                    mImageViewPerson2?.setImageBitmap(imageBitmap)
+//
+//            }
+
+                    val selectedImage = data.data
+                    val type = data.getIntExtra("type", TYPE_CHOOSE_PHOTO_CODE4PERSON1)
+                    Log.d(
+                        TAG,
+                        "select uri:" + selectedImage.toString() + "type: " + type
+                    )
+                    getBitmap(type, selectedImage!!)
+              //  }
+            }
     }
+
 
     private fun getBitmap(type: Int, imageUri: Uri) {
         val pathColumn = arrayOf(
@@ -212,17 +309,18 @@ class NewCompareActivity : AppCompatActivity() {
         }
     })
 
-    private fun requestPermissions() {
+
+
+    private fun requestPermissionsCamera() {
         try {
-            val permission = ActivityCompat.checkSelfPermission(
+            val permissionCamera = ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.CAMERA
             )
-            if (permission != PackageManager.PERMISSION_GRANTED) {
+            if (permissionCamera != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                     this, arrayOf(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
+                        Manifest.permission.CAMERA
                     ), 0x0010
                 )
             }

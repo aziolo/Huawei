@@ -6,58 +6,133 @@
     android:layout_height="match_parent"
     tools:context=".NewCompareActivity">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/textView_Person1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Person 1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnPerson1_Gallery"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnPerson1_Gallery"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <Button
+        android:id="@+id/btnPerson2_Gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="onClickButton"
+        android:text="Gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnPerson2_Camera"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPerson1_Gallery"
+        app:layout_constraintVertical_bias="0.025" />
+
+    <TextView
+        android:id="@+id/textView_Person2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Person 2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnPerson2_Gallery"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_Person1"
+        app:layout_constraintVertical_bias="0.094" />
+
+    <Button
+        android:id="@+id/btnPerson1_Camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="onClickButton"
+        android:text="Camera"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPerson1_Gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toEndOf="@+id/btnPerson1_Gallery"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imgViewPerson1"
+        android:layout_width="210dp"
+        android:layout_height="170dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/imgViewPerson2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnstarCompare"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/imgViewPerson2"
+        android:layout_width="210dp"
+        android:layout_height="170dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="104dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <Button
+        android:id="@+id/btnPerson2_Camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="onClickButton"
+        android:text="CAMERA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPerson1_Camera"
+        app:layout_constraintVertical_bias="0.025" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="Is The Same Person?"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imgViewPerson2" />
 
-        <Button
-            android:id="@+id/btnPerson1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickButton"
-            android:text="person1" />
+    <Button
+        android:id="@+id/btnstarCompare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="400dp"
+        android:onClick="onClickButton"
+        android:text="start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnPerson1_Gallery" />
 
-        <Button
-            android:id="@+id/btnPerson2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickButton"
-            android:text="person2" />
-
-        <Button
-            android:id="@+id/btnstarCompare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickButton"
-            android:text="start" />
-
-        <ImageView
-            android:id="@+id/imgViewPerson1"
-            android:layout_width="210dp"
-            android:layout_height="170dp"
-            android:layout_gravity="center"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/imgViewPerson2"
-            android:layout_width="210dp"
-            android:layout_height="170dp"
-            android:layout_gravity="center"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="Is The Same Person?"
-            android:textSize="15dp" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnPerson1_Gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:onClick="onClickButton"
+        android:text="Gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
