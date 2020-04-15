@@ -233,7 +233,7 @@ class NewCompareActivity : AppCompatActivity() {
                     mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON1)
                 } else {
                     mBitmapPerson2 = data.extras!!.get("data") as Bitmap
-                    mImageViewPerson1.setImageBitmap(mBitmapPerson2)
+                    mImageViewPerson2.setImageBitmap(mBitmapPerson2)
                     mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON2)
                 }
             }

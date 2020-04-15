@@ -2,8 +2,10 @@ package com.alemz.compare3
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
@@ -54,6 +56,27 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         }
     }
 
+
+//    private fun getBitmap(type: Int, imageUri: Uri) {
+//        val pathColumn = arrayOf(
+//            MediaStore.Images.Media.DATA
+//        )
+//        //Query the photo corresponding to the specified Uri from the system table
+//        val cursor =
+//            contentResolver.query(imageUri, pathColumn, null, null, null)
+//        cursor?.moveToFirst()
+//        val columnIndex = cursor!!.getColumnIndex(pathColumn[0])
+//        val picturePath = cursor.getString(columnIndex) //Get photo path
+//        cursor.close()
+//        if (isPerson1) {
+//            mBitmapPerson1 = BitmapFactory.decodeFile(picturePath)
+//            Log.e("Bitmap person 1", mBitmapPerson1.toString())
+//            mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON1)
+//        } else {
+//            mBitmapPerson2 = BitmapFactory.decodeFile(picturePath)
+//            mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON2)
+//        }
+//    }
 
 
 
