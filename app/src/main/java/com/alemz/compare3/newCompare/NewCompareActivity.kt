@@ -24,17 +24,22 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProviders
 import com.alemz.compare3.R
 import com.alemz.compare3.R.id.*
+import com.alemz.compare3.createMember.CMViewModel
+import com.alemz.compare3.data.Similarity
 import com.huawei.hiai.vision.common.ConnectionCallback
 import com.huawei.hiai.vision.common.VisionBase
 import com.huawei.hiai.vision.face.FaceComparator
 import com.huawei.hiai.vision.visionkit.common.Frame
 import com.huawei.hiai.vision.visionkit.face.FaceCompareResult
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION")
 class NewCompareActivity : AppCompatActivity() {
@@ -61,7 +66,13 @@ class NewCompareActivity : AppCompatActivity() {
     private var mFaceComparator: FaceComparator? = null
     private var indicator1: Boolean = false
     private var indicator2: Boolean = false
-
+    private val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private var finalResult: Float = 0.0f
+    private val viewModel: NCViewModel by lazy {
+        ViewModelProviders.of(this).get(
+            NCViewModel::class.java
+        )
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,6 +157,8 @@ class NewCompareActivity : AppCompatActivity() {
                 indicator2 = false
             }
             btn_Accept -> {
+                insertSimilarityToDB()
+                finish()
             }
             else -> {
             }
@@ -299,8 +312,9 @@ class NewCompareActivity : AppCompatActivity() {
                     val result = msg.obj as FaceCompareResult
 
                     val resultPercent = result.socre * 100
-                    val resultFloat:String = String.format("%.2f",resultPercent).toString()
-                    mTxtViewResult!!.text = " $resultFloat %"
+                    finalResult = (resultPercent * 100).roundToInt().toFloat()/100
+                    toastx(finalResult.toString())
+                    mTxtViewResult!!.text = " $finalResult %"
 
                     if (result.isSamePerson) {
                         toastx("This is the same person. Change photos !")
@@ -376,5 +390,47 @@ class NewCompareActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun scaleBitmap(input: Bitmap): Bitmap {
+        val currentWidth = input.width
+        val currentHeight = input.height
+        val currentPixels = currentWidth * currentHeight
+        val maxPixels = 1024 * 1024 / 4
+        if (currentPixels <= maxPixels) {
+            return input
+        }
+        val scaleFactor =
+            kotlin.math.sqrt(maxPixels / currentPixels.toDouble())
+        val newWidthPx = kotlin.math.floor(currentWidth * scaleFactor).toInt()
+        val newHeightPx = kotlin.math.floor(currentHeight * scaleFactor).toInt()
+        return Bitmap.createScaledBitmap(input, newWidthPx, newHeightPx, true)
+    }
+    private fun bitmapToByteArray(bitmap: Bitmap) : ByteArray{
+        val scaledBitmap = scaleBitmap(bitmap)
+        if (scaledBitmap != bitmap) {
+            bitmap.recycle()
+        }
+        val stream = ByteArrayOutputStream()
+        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val photo = stream.toByteArray()
+        if (!(scaledBitmap == null || scaledBitmap.isRecycled)) {
+            scaledBitmap.recycle()
+        }
+        return photo
+    }
+
+    //change id
+    private fun insertSimilarityToDB(){
+        val id = UUID.randomUUID().mostSignificantBits
+        val id1 = UUID.randomUUID().mostSignificantBits
+        val id2 = UUID.randomUUID().mostSignificantBits
+        val date = formatter.format(Calendar.getInstance().time)
+        val photo1 = bitmapToByteArray(mBitmapPerson1!!)
+        val photo2 = bitmapToByteArray(mBitmapPerson2!!)
+        val end = Similarity(id, finalResult, id1, id2, date,photo1,photo2)
+        viewModel.insertMember(end)
+
+
     }
 }
