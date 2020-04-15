@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import de.blox.graphview.*
 import de.blox.graphview.tree.BuchheimWalkerAlgorithm
 import de.blox.graphview.tree.BuchheimWalkerConfiguration
 import kotlinx.android.synthetic.main.fragment_family_tree.view.*
+import kotlinx.android.synthetic.main.node.*
 
 class FamilyTreeFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
@@ -42,21 +44,33 @@ class FamilyTreeFragment : Fragment() {
         adapter = GraphAdapter(this, graph)
         drawFamilyTree(view)
 
-
         val node1 = Node(getNodeText())
         val node2 = Node(getNodeText())
         val node3 = Node(getNodeText())
         val node4 = Node(getNodeText())
         val node5 = Node(getNodeText())
         val node6 = Node(getNodeText())
+        val node7 = Node(getNodeText())
+        val node8 = Node(getNodeText())
 
-        graph.addEdge(node1, node2)
-        graph.addEdge(node1, node3)
-        graph.addEdge(node2, node4)
-        graph.addEdge(node2, node5)
-        graph.addEdge(node1, node6)
+        val edge1 = Edge(node1,node2)
+        val edge2 = Edge(node1,node3)
+        val edge3 = Edge(node1,node4)
+        val edge4 = Edge(node2,node3)
+        val edge5 = Edge(node3,node5)
 
+        graph.addEdges(edge1,edge2,edge3,edge4,edge5)
 
+//        graph.addEdge(node1,node2)
+//        graph.addEdge(node1,node3)
+//        graph.addEdge(node2,node4)
+//        graph.addEdge(node2,node5)
+//        graph.addEdge(node3,node6)
+//        graph.addEdge(node3,node7)
+//        graph.addEdge(7,8)
+//        Log.i("node1",node1.toString())
+//        Log.i("node2",node2.toString())
+//        Log.i("node3",node3.toString())
 
         graphView.adapter = adapter
         // set the algorithm here
