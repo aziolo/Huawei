@@ -8,7 +8,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alemz.compare3.R
+import com.alemz.compare3.data.Similarity
 import com.alemz.compare3.newCompare.NewCompareActivity
 import kotlinx.android.synthetic.main.fragment_similarity.view.*
 
@@ -30,6 +34,13 @@ class SimilarityFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var adapter: SimilarityAdapter
+
+    private val viewModel: SViewModel by lazy {
+        ViewModelProviders.of(this).get(
+            SViewModel::class.java
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +55,15 @@ class SimilarityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_similarity, container, false)
+        adapter = SimilarityAdapter(this)
+        view.recyclerView.layoutManager = LinearLayoutManager(context)
+        view.recyclerView.adapter = adapter
+
+
+        viewModel.getAllSimilarity().observe(viewLifecycleOwner, Observer<List<Similarity>> { t ->
+            adapter.set(t!!)
+
+        })
 
         view.button.setOnClickListener {
             val intent = Intent(context, NewCompareActivity::class.java)
