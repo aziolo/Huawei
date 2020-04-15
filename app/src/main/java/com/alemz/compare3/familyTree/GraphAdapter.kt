@@ -2,6 +2,7 @@ package com.alemz.compare3.familyTree
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,25 +39,27 @@ class GraphAdapter(private val fragment: FamilyTreeFragment, graph: Graph) :
         val holder = viewHolder as GraphViewHolder
         if (list.isNotEmpty() && position < list.size){
             val current = list[position]
-
-            if (current.marriedTo !== null){
-                holder.card2.isVisible = true
-                val beloved = viewModel.getBeloved(current.uid)
-                holder.name2.text = beloved.firstName + "\n" + beloved.lastName
-                holder.photo2.setImageBitmap(byteArrayToBitmap(current.photo))
-            }
-            holder.card2.isVisible = false
+            //Log.e("adapter size = ", list.size.toString())
             holder.name1.text = current.firstName + "\n" + current.lastName
             holder.photo1.setImageBitmap(byteArrayToBitmap(current.photo))
-
+            if (current.marriedTo !== null){
+                holder.card2.isVisible = true
+                val beloved = viewModel.getBeloved(current.marriedTo)
+                holder.name2.text = beloved.firstName + "\n" + beloved.lastName
+                holder.photo2.setImageBitmap(byteArrayToBitmap(beloved.photo))
+                Log.e("adapter current = ",beloved.toString())
+            }
+            if (current.marriedTo == null) {
+                holder.card2.isVisible = false
+            }
         }
     }
 
     inner class GraphViewHolder(itemView: View) : ViewHolder(itemView) {
-        var name1: TextView = itemView.findViewById(R.id.textViewH)
-        var name2: TextView = itemView.findViewById(R.id.textViewW)
-        var photo1: ImageView = itemView.findViewById(R.id.tree_photoH)
-        var photo2: ImageView = itemView.findViewById(R.id.tree_photoW)
+        var name1: TextView = itemView.findViewById(R.id.textView1)
+        var name2: TextView = itemView.findViewById(R.id.textView2)
+        var photo1: ImageView = itemView.findViewById(R.id.tree_photo1)
+        var photo2: ImageView = itemView.findViewById(R.id.tree_photo2)
         var card1: CardView = itemView.findViewById(R.id.cardView_1)
         var card2: CardView = itemView.findViewById(R.id.cardView_2)
     }

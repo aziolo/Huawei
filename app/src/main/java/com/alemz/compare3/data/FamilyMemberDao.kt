@@ -9,10 +9,13 @@ import androidx.room.Query
 @Dao
 interface FamilyMemberDao {
     @Query("SELECT * FROM FamilyMember")
-    fun getSex(): LiveData<List<FamilyMember>>
+    fun getAll(): LiveData<List<FamilyMember>>
+
+    @Query("SELECT * FROM FamilyMember")
+    fun getAllNoLive(): List<FamilyMember>
 
     @Query("SELECT * FROM FamilyMember WHERE sex LIKE:s")
-    fun getSex(s: String): LiveData<List<FamilyMember>>
+    fun getAll(s: String): LiveData<List<FamilyMember>>
 
     @Query("SELECT * FROM FamilyMember")
     fun getList(): List<FamilyMember>

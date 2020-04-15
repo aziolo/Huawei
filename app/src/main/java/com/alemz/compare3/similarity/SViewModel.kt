@@ -18,4 +18,11 @@ class SViewModel(application: Application): AndroidViewModel(application) {
     fun getAllSimilarity(): LiveData<List<Similarity>>{
         return similarityRepository.getAll()
     }
+
+    fun getOne(id:Long): FamilyMember {
+        return memberRepository.getBeloved(id)
+    }
+    fun getAllNoLive(): List<FamilyMember> {
+        return memberRepository.getAllNoLive()
+    }
 }

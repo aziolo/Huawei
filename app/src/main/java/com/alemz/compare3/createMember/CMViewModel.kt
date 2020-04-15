@@ -11,8 +11,14 @@ class CMViewModel (application: Application): AndroidViewModel(application) {
     fun insertMember(member: FamilyMember){
         memberRepository.insert(member)
     }
-    fun getList(): List<String> {
-        return memberRepository.getList()
+    fun getList(mode: String): List<String> {
+        return memberRepository.getList(mode)
+    }
+    fun getAllNoLive(): List<FamilyMember> {
+        return memberRepository.getAllNoLive()
+    }
+    fun getOne(id:Long): FamilyMember {
+        return memberRepository.getBeloved(id)
     }
 
 }

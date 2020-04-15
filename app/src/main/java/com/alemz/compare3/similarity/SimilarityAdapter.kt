@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.alemz.compare3.R
 import com.alemz.compare3.data.Similarity
+import org.w3c.dom.Text
 import java.io.ByteArrayInputStream
 
 class SimilarityAdapter(private val fragment: SimilarityFragment) :
@@ -17,12 +19,19 @@ class SimilarityAdapter(private val fragment: SimilarityFragment) :
 {
 
     private var list: List<Similarity> = ArrayList()
+    private val viewModel: SViewModel by lazy {
+        ViewModelProviders.of(fragment).get(
+            SViewModel::class.java
+        )
+    }
 
     inner class ValueHolder(view: View) : RecyclerView.ViewHolder(view) {
         var date: TextView = view.findViewById(R.id.date_tv)
         var value2: TextView = view.findViewById(R.id.value_tv)
         var me: ImageView = view.findViewById(R.id.me_photo)
         var you: ImageView = view.findViewById(R.id.you_photo)
+        val meName : TextView = view.findViewById(R.id.first)
+        val youName: TextView = view.findViewById(R.id.second)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ValueHolder {
@@ -42,11 +51,14 @@ class SimilarityAdapter(private val fragment: SimilarityFragment) :
 
     override fun onBindViewHolder(holder: ValueHolder, position: Int) {
         val current = list[position]
-
+        val me = viewModel.getOne(current.idPerson1)
+        val you = viewModel.getOne(current.idPerson2)
         holder.me.setImageBitmap(byteArrayToBitmap(current.photo1)?.let { scaleBitmap(it) })
         holder.you.setImageBitmap(byteArrayToBitmap(current.photo2)?.let { scaleBitmap(it) })
         holder.date.text = current.data
         holder.value2.text = current.value.toString() + " %"
+        holder.meName.text = me.firstName + " " + me.lastName
+        holder.youName.text = you.firstName + " " + you.lastName
     }
 
     private fun byteArrayToBitmap(byteArray: ByteArray?): Bitmap? {

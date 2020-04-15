@@ -19,7 +19,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".createMember.CreateMemberActivity"></activity>
         <activity android:name=".newCompare.NewCompareActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

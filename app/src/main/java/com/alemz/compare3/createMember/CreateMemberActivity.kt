@@ -16,6 +16,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import com.alemz.compare3.main.MainActivity
 import com.alemz.compare3.R
 import com.alemz.compare3.data.FamilyMember
 import kotlinx.android.synthetic.main.activity_create_member.*
@@ -32,7 +33,11 @@ class CreateMemberActivity : AppCompatActivity() {
     private lateinit var photo: ByteArray
     private lateinit var selectedTime: String
     private lateinit var list: List<String>
+    private lateinit var allList:List<FamilyMember>
     private val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private var father: Long? = null
+    private var mother: Long? = null
+    private var beloved: Long? = null
 
     private val viewModel: CMViewModel by lazy {
         ViewModelProviders.of(this).get(
@@ -44,7 +49,9 @@ class CreateMemberActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_member)
         female.isChecked = true
-        list = viewModel.getList()
+        allList = viewModel.getAllNoLive()
+        list = viewModel.getList("a")
+
         setSpinners()
 
     }
@@ -135,14 +142,12 @@ class CreateMemberActivity : AppCompatActivity() {
         val firstName = input_name.text.toString()
         val lastName = input_surname.text.toString()
         val birth = input_date_of_birth.text.toString()
-        val father = UUID.randomUUID().mostSignificantBits
-        val mother = UUID.randomUUID().mostSignificantBits
-        val marriedTo = UUID.randomUUID().mostSignificantBits
 
         if (firstName.isNotEmpty() && birth.isNotEmpty() && photo.isNotEmpty() ) {
-            val newMember = FamilyMember(id, firstName, lastName, birth, sex, father, mother, marriedTo, photo)
+            val newMember = FamilyMember(id, firstName, lastName, birth, sex, father, mother, beloved, photo)
+            Log.e("insert", newMember.toString())
             viewModel.insertMember(newMember)
-            finish()
+            startActivity(Intent(this, MainActivity::class.java ))
         }
         else Toast.makeText(this,"complete the fields! ", Toast.LENGTH_SHORT).show()
     }
@@ -151,7 +156,7 @@ class CreateMemberActivity : AppCompatActivity() {
         val currentWidth = input.width
         val currentHeight = input.height
         val currentPixels = currentWidth * currentHeight
-        val maxPixels = 1024 * 1024 / 4
+        val maxPixels = 256 * 256 / 4
         if (currentPixels <= maxPixels) {
             return input
         }
@@ -173,7 +178,11 @@ class CreateMemberActivity : AppCompatActivity() {
                 view: View?,
                 position: Int,
                 id: Long
-            ) {}
+            ) {
+
+                if (input_father.selectedItem.toString() == "none") father = null
+                else father = allList[position].uid
+            }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -184,7 +193,10 @@ class CreateMemberActivity : AppCompatActivity() {
                 view: View?,
                 position: Int,
                 id: Long
-            ) {}
+            ) {
+               if (input_mother.selectedItem.toString() == "none") mother = null
+               else mother = allList[position].uid
+            }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -195,7 +207,10 @@ class CreateMemberActivity : AppCompatActivity() {
                 view: View?,
                 position: Int,
                 id: Long
-            ) {}
+            ) {
+                if (input_married.selectedItem.toString() == "none") beloved = null
+                else beloved = allList[position].uid
+            }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }

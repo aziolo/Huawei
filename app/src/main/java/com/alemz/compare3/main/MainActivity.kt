@@ -1,4 +1,4 @@
-package com.alemz.compare3
+package com.alemz.compare3.main
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,30 +6,25 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.alemz.compare3.R
 import com.alemz.compare3.createMember.CMViewModel
 import com.alemz.compare3.data.AppDataBase
 import com.alemz.compare3.data.FamilyMember
-import com.alemz.compare3.familyTree.FTViewModel
 import com.alemz.compare3.familyTree.FamilyTreeFragment
 import com.alemz.compare3.similarity.SimilarityFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.*
-import java.lang.Math.floor
-import java.lang.Math.sqrt
 import java.util.*
 
 
 @Suppress("DEPRECATION")
-class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, RelationshipFragment.OnFragmentInteractionListener, SimilarityFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteractionListener, SimilarityFragment.OnFragmentInteractionListener {
 
     private lateinit var navController: NavController
     private val viewModel: CMViewModel by lazy {
@@ -50,7 +45,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         requestPermissionsStorage()
 
 
-        addtoDB()
+       // addToDB()
 
 
     }
@@ -75,7 +70,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
             e.printStackTrace()
         }
     }
-    private fun addtoDB() {
+    private fun addToDB() {
 
         var list = arrayListOf<String>(
             "storage/emulated/0/DCIM/Camera/IMG_20200415_093643.jpg",
@@ -91,9 +86,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         val bitlist = arrayListOf<Bitmap>()
         val arr = arrayListOf<ByteArray>()
         for (i in list.indices) {
-            val bitmap = BitmapFactory.decodeFile(list[i])
-            bitlist.add(scaleBitmap(bitmap))
-            arr.add(checkRecycle(bitlist[i]))
+            arr.add(checkRecycle(scaleBitmap(BitmapFactory.decodeFile(list[i]))))
         }
         for (i in 0 ..6){
             if (i == 0){
@@ -131,7 +124,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         val currentWidth = input.width
         val currentHeight = input.height
         val currentPixels = currentWidth * currentHeight
-        val maxPixels = 1024 * 1024 / 4
+        val maxPixels = 256 * 256 / 4
         if (currentPixels <= maxPixels) {
             return input
         }
@@ -147,7 +140,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
             bitmap.recycle()
         }
         val stream = ByteArrayOutputStream()
-        scaledBitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
         val photo = stream.toByteArray()
         if (!(scaledBitmap == null || scaledBitmap.isRecycled)) {
             scaledBitmap.recycle()

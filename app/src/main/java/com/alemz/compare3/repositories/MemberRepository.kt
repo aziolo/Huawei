@@ -19,7 +19,7 @@ class MemberRepository (application: Application) {
         val db: AppDataBase = AppDataBase.invoke(application.applicationContext)
         dao = db.familyMemberDao()
         con = application.applicationContext
-        allMembers = dao.getSex()
+        allMembers = dao.getAll()
     }
 
     fun getAll(): LiveData<List<FamilyMember>> {
@@ -28,7 +28,13 @@ class MemberRepository (application: Application) {
         ).execute().get()
     }
 
-    fun getList(): List<String> {
+    fun getAllNoLive(): List<FamilyMember> {
+        return GetAllNoLiveAsyncTask(
+            dao
+        ).execute().get()
+    }
+
+    fun getList(mode: String): List<String> {
         val list = mutableListOf<String>()
         val a =  GetListAsyncTask(
             dao
@@ -36,7 +42,7 @@ class MemberRepository (application: Application) {
         for (i in a.indices){
             list.add(i,a[i].firstName+" "+a[i].lastName)
         }
-        list.plusAssign("none")
+        if (mode == "a") list.plusAssign("none")
         return list
     }
 
@@ -76,7 +82,14 @@ private class InsertMemberAsyncTask(val dao: FamilyMemberDao, val con: Context) 
 class GetAllAsyncTask(private val dao: FamilyMemberDao) :
     AsyncTask<Unit, Unit, LiveData<List<FamilyMember>>>() {
     override fun doInBackground(vararg params: Unit?): LiveData<List<FamilyMember>> {
-        return dao.getSex()
+        return dao.getAll()
+    }
+}
+
+class GetAllNoLiveAsyncTask(private val dao: FamilyMemberDao) :
+    AsyncTask<Unit, Unit, List<FamilyMember>>() {
+    override fun doInBackground(vararg params: Unit?): List<FamilyMember> {
+        return dao.getAllNoLive()
     }
 }
 
@@ -98,7 +111,7 @@ class GetBelovedAsyncTask(private val dao: FamilyMemberDao, private val id: Long
 class GetSexAsyncTask(private val dao: FamilyMemberDao, private val sex: String) :
     AsyncTask<Unit, Unit, LiveData<List<FamilyMember>>>() {
     override fun doInBackground(vararg params: Unit?): LiveData<List<FamilyMember>> {
-        return dao.getSex(sex)
+        return dao.getAll(sex)
     }
 
 }

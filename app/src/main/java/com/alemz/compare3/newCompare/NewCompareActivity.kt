@@ -17,9 +17,7 @@ import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -27,7 +25,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProviders
 import com.alemz.compare3.R
 import com.alemz.compare3.R.id.*
-import com.alemz.compare3.createMember.CMViewModel
+import com.alemz.compare3.data.FamilyMember
 import com.alemz.compare3.data.Similarity
 import com.huawei.hiai.vision.common.ConnectionCallback
 import com.huawei.hiai.vision.common.VisionBase
@@ -68,6 +66,12 @@ class NewCompareActivity : AppCompatActivity() {
     private var indicator2: Boolean = false
     private val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private var finalResult: Float = 0.0f
+    private lateinit var spin1 : Spinner
+    private lateinit var spin2 : Spinner
+    private lateinit var list: List<String>
+    private lateinit var allList:List<FamilyMember>
+    private var per1: Long? = null
+    private var per2: Long? = null
     private val viewModel: NCViewModel by lazy {
         ViewModelProviders.of(this).get(
             NCViewModel::class.java
@@ -85,6 +89,11 @@ class NewCompareActivity : AppCompatActivity() {
         mCardViewResult = findViewById<CardView>(R.id.result_card)
         mCardViewPerson1 = findViewById<CardView>(R.id.person_1_card)
         mCardViewPerson2 = findViewById<CardView>(R.id.person_2_card)
+        spin1 = findViewById(R.id.spinner1)
+        spin2 = findViewById(R.id.spinner2)
+        allList = viewModel.getAllNoLive()
+        list = viewModel.getList("b")
+        setSpinners()
 
         VisionBase.init(this, object : MediaBrowser.ConnectionCallback(), ConnectionCallback {
             override fun onServiceConnect() {
@@ -171,7 +180,6 @@ class NewCompareActivity : AppCompatActivity() {
                 val photoFile: File? = try {
                     createImageFile()
                 } catch (ex: IOException) {
-                    toastx("not ok")
                     null
                 }
                 // Continue only if the File was successfully created
@@ -181,7 +189,6 @@ class NewCompareActivity : AppCompatActivity() {
                         "com.alemz.compare3",
                         it
                     )
-                    toastx(photoURI.toString())
                     //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
                     startActivityForResult(takePictureIntent,
                         REQUEST_PHOTO_CAMERA
@@ -229,7 +236,6 @@ class NewCompareActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (data == null) {
-                toastx("No Data")
                 return
             }
             if (isPerson1)
@@ -313,7 +319,6 @@ class NewCompareActivity : AppCompatActivity() {
 
                     val resultPercent = result.socre * 100
                     finalResult = (resultPercent * 100).roundToInt().toFloat()/100
-                    toastx(finalResult.toString())
                     mTxtViewResult!!.text = " $finalResult %"
 
                     if (result.isSamePerson) {
@@ -322,12 +327,7 @@ class NewCompareActivity : AppCompatActivity() {
                         mCardViewResult.isVisible = false
                         mCardViewPerson1.isVisible = true
                         mCardViewPerson2.isVisible = true
-    //                    mTxtViewResult!!.text = "The same Person !!  and score: " + result.socre
                     }
-//                    else {
-//                        toastx("The same Person")
-//                        mTxtViewResult!!.text = "Not the same Person !! and score:" + result.socre
-//                    }
                 }
                 else -> {
                 }
@@ -336,7 +336,6 @@ class NewCompareActivity : AppCompatActivity() {
     }
 
     private fun startCompare() {
-  //      mTxtViewResult!!.text = "Is the same Person ??? "
         mTxtViewResult!!.text = " "
         synchronized(mWaitResult) {
             mWaitResult.notifyAll()
@@ -396,7 +395,7 @@ class NewCompareActivity : AppCompatActivity() {
         val currentWidth = input.width
         val currentHeight = input.height
         val currentPixels = currentWidth * currentHeight
-        val maxPixels = 1024 * 1024 / 4
+        val maxPixels = 256 * 256 / 4
         if (currentPixels <= maxPixels) {
             return input
         }
@@ -423,14 +422,46 @@ class NewCompareActivity : AppCompatActivity() {
     //change id
     private fun insertSimilarityToDB(){
         val id = UUID.randomUUID().mostSignificantBits
-        val id1 = UUID.randomUUID().mostSignificantBits
-        val id2 = UUID.randomUUID().mostSignificantBits
+        val id1 = per1!!
+        val id2 = per2!!
         val date = formatter.format(Calendar.getInstance().time)
         val photo1 = bitmapToByteArray(mBitmapPerson1!!)
         val photo2 = bitmapToByteArray(mBitmapPerson2!!)
         val end = Similarity(id, finalResult, id1, id2, date,photo1,photo2)
         viewModel.insertMember(end)
-
-
     }
+
+    private fun setSpinners(){
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, list)
+        spin1.adapter = adapter
+        spin2.adapter = adapter
+
+        spin1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (allList.isNotEmpty()) per1 = allList[position].uid
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        spin2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (allList.isNotEmpty()) per2 = allList[position].uid
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+    }
+
 }

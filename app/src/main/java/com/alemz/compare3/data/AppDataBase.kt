@@ -43,9 +43,9 @@ abstract class AppDataBase : RoomDatabase() {
         //prawdziwa baza
         //private fun buildDataBase(context: Context) = Room.databaseBuilder(context, AppDataBase::class.java, "diabetic_daily.db").build()
         //baza do fazy testów, będzie działać tylko temporary
-        //private fun buildDataBase(context: Context) =
-          //  Room.databaseBuilder(context, AppDataBase::class.java, "local.db").build()
-        private fun buildDataBase(context: Context) = Room.inMemoryDatabaseBuilder(context, AppDataBase::class.java).build()
+        private fun buildDataBase(context: Context) =
+           Room.databaseBuilder(context, AppDataBase::class.java, "local.db").build()
+        //private fun buildDataBase(context: Context) = Room.inMemoryDatabaseBuilder(context, AppDataBase::class.java).build()
     }
 
     private val roomCallback = object : RoomDatabase.Callback(){

@@ -20,8 +20,6 @@ import de.blox.graphview.*
 import de.blox.graphview.tree.BuchheimWalkerAlgorithm
 import de.blox.graphview.tree.BuchheimWalkerConfiguration
 import kotlinx.android.synthetic.main.fragment_family_tree.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class FamilyTreeFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
@@ -49,39 +47,8 @@ class FamilyTreeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_family_tree, container, false)
         val graphView = view.findViewById<GraphView>(R.id.graph)
         adapter = GraphAdapter(this, graph)
-        draw()
-
-        val job = GlobalScope.launch { // launch a new coroutine and keep a reference to its Job
-            readDB()
-        }
-        drawFamilyTree()
-
-//        val node1 = Node(getNodeText())
-//        val node2 = Node(getNodeText())
-//        val node3 = Node(getNodeText())
-//        val node4 = Node(getNodeText())
-//        val node5 = Node(getNodeText())
-//
-//
-//        val edge1 = Edge(node1,node2)
-//        val edge2 = Edge(node1,node3)
-//        val edge3 = Edge(node1,node4)
-//        val edge4 = Edge(node2,node3)
-//        val edge5 = Edge(node3,node5)
-//
-//        graph.addEdges(edge1,edge2,edge3,edge4,edge5)
-
-//        graph.addEdge(node1,node2)
-//        graph.addEdge(node1,node3)
-//        graph.addEdge(node2,node4)
-//        graph.addEdge(node2,node5)
-//        graph.addEdge(node3,node6)
-//        graph.addEdge(node3,node7)
-//        graph.addEdge(7,8)
-//        Log.i("node1",node1.toString())
-//        Log.i("node2",node2.toString())
-//        Log.i("node3",node3.toString())
-
+        //showing()
+        readDB()
         graphView.adapter = adapter
         // set the algorithm here
         // set the algorithm here
@@ -126,15 +93,6 @@ class FamilyTreeFragment : Fragment() {
                 graph.addEdge(nodes[nr], nodes[i])
             }
         }
-        for (i in graphElements.indices){
-            if (graphElements[i].father !== null){
-                val idDad = graphElements[i].father
-                val dad = viewModel.getBeloved(idDad!!)
-                val nr = graphElements.indexOf(dad)
-                graph.addEdge(nodes[nr], nodes[i])
-            }
-        }
-        Log.e("graph elements ",graphElements.size.toString())
     }
 
 
@@ -145,8 +103,6 @@ class FamilyTreeFragment : Fragment() {
             for (i in t.indices){
                 d.add(t[i])
             }
-            Log.e("d = ",d[0].toString())
-            Log.e("t = ",t[0].toString())
             if(d.isNotEmpty()) {
                 Log.e("d if = ",d[0].toString())
                 for (i in d.indices){
@@ -161,8 +117,7 @@ class FamilyTreeFragment : Fragment() {
                     }
                 }
             }
-            Log.e("singles = ",singles.size.toString())
-            Log.e("couples = ",couples.size.toString())
+            drawFamilyTree()
         })
     }
     // TODO: Rename method, update argument and hook method into UI event
@@ -191,16 +146,13 @@ class FamilyTreeFragment : Fragment() {
     companion object {
     }
 
-    inner class GetListAsyncTask() :
-        AsyncTask<Unit, Unit, Unit>(){
+    inner class ShowAsyncTask() :
+        AsyncTask<Unit, Unit, Unit>() {
         override fun doInBackground(vararg params: Unit?) {
             readDB()
         }
-        private fun onPostExecute(result: Long) {
-            drawFamilyTree()
-        }
     }
-    fun draw() {
-        GetListAsyncTask().execute()
+    fun showing(){
+        return ShowAsyncTask().execute().get()
     }
 }
