@@ -59,8 +59,8 @@ class NewCompareActivity : AppCompatActivity() {
     private var isPerson1 = false
     private val mWaitResult = Object()
     private var mFaceComparator: FaceComparator? = null
-    private var Indicator_1: Boolean = false
-    private var Indicator_2: Boolean = false
+    private var indicator1: Boolean = false
+    private var indicator2: Boolean = false
 
 
 
@@ -74,9 +74,6 @@ class NewCompareActivity : AppCompatActivity() {
         mCardViewResult = findViewById<CardView>(R.id.result_card)
         mCardViewPerson1 = findViewById<CardView>(R.id.person_1_card)
         mCardViewPerson2 = findViewById<CardView>(R.id.person_2_card)
-
-
-    //    mCardViewResult = findViewById(R.id.result_card)
 
         VisionBase.init(this, object : MediaBrowser.ConnectionCallback(), ConnectionCallback {
             override fun onServiceConnect() {
@@ -102,7 +99,6 @@ class NewCompareActivity : AppCompatActivity() {
         val requestCode: Int
         when (view.id) {
             btnPerson1_Gallery -> {
-                toastx("Gallery")
                 Log.d(TAG, "btnPerson1_Gallery")
                 isPerson1 = true
                 val intent = Intent(Intent.ACTION_PICK)
@@ -112,7 +108,6 @@ class NewCompareActivity : AppCompatActivity() {
                 startActivityForResult(intent, requestCode)
             }
             btnPerson2_Gallery -> {
-                toastx("Gallery")
                 Log.d(TAG, "btnPerson2_Gallery")
                 isPerson1 = false
                 val intent = Intent(Intent.ACTION_PICK)
@@ -122,17 +117,15 @@ class NewCompareActivity : AppCompatActivity() {
                 startActivityForResult(intent, requestCode)
             }
             btnPerson1_Camera -> {
-                toastx("Camera")
                 isPerson1 = true
                 dispatchTakePictureIntent()
             }
             btnPerson2_Camera -> {
-                toastx("Camera")
                 isPerson1 = false
                 dispatchTakePictureIntent()
             }
             btnstarCompare -> {
-                if(Indicator_1 && Indicator_2) {
+                if(indicator1 && indicator2) {
                     startCompare()
                     mCardViewCheck.isVisible = false
                     mCardViewResult.isVisible = true
@@ -142,7 +135,6 @@ class NewCompareActivity : AppCompatActivity() {
                 else
                     toastx("Choose photos to start compare")
             }
-
             btn_Repeat -> {
                 mCardViewCheck.isVisible = true
                 mCardViewResult.isVisible = false
@@ -150,31 +142,26 @@ class NewCompareActivity : AppCompatActivity() {
                 mCardViewPerson2.isVisible = true
                 mImageViewPerson1.setImageResource(R.drawable.user)
                 mImageViewPerson2.setImageResource(R.drawable.user)
-                Indicator_1 = false
-                Indicator_2 = false
+                indicator1 = false
+                indicator2 = false
             }
             btn_Accept -> {
             }
-
-
             else -> {
             }
         }
     }
+
     private fun dispatchTakePictureIntent() {
-//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-//            takePictureIntent.resolveActivity(packageManager)?.also {
-//                startActivityForResult(takePictureIntent, REQUEST_PHOTO_CAMERA)
-//
-//            }
-//        }
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
                 val photoFile: File? = try {
                     createImageFile()
                 } catch (ex: IOException) {
+                    toastx("not ok")
                     null
                 }
+                // Continue only if the File was successfully created
                 photoFile?.also {
                     val photoURI = FileProvider.getUriForFile(
                         this,
@@ -182,7 +169,7 @@ class NewCompareActivity : AppCompatActivity() {
                         it
                     )
                     toastx(photoURI.toString())
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
+                    //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
                     startActivityForResult(takePictureIntent,
                         REQUEST_PHOTO_CAMERA
                     )
@@ -190,15 +177,23 @@ class NewCompareActivity : AppCompatActivity() {
             }
         }
     }
+    private fun galleryAddPic() {
+        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+            val f = File(currentPhotoPath)
+            mediaScanIntent.data = Uri.fromFile(f)
+            sendBroadcast(mediaScanIntent)
+        }
+    }
     lateinit var currentPhotoPath: String
 
+    @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
+            "IMG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
             storageDir /* directory */
         ).apply {
@@ -219,39 +214,42 @@ class NewCompareActivity : AppCompatActivity() {
         data: Intent?
     ) {
         super.onActivityResult(requestCode, resultCode, data)
-        toastx(REQUEST_PHOTO_CAMERA.toString())
         if (resultCode == Activity.RESULT_OK) {
             if (data == null) {
                 toastx("No Data")
                 return
             }
-
-
             if (isPerson1)
-                Indicator_1 = true
+                indicator1 = true
             else if (!isPerson1)
-                Indicator_2 = true
-//
-//            if (requestCode == REQUEST_PHOTO_CAMERA){
-//                val imageBitmap = data.extras?.get("data") as Bitmap
-//                if (isPerson1)
-//                    mImageViewPerson1?.setImageBitmap(imageBitmap)
-//                else if (!isPerson1)
-//                    mImageViewPerson2?.setImageBitmap(imageBitmap)
-//
-//            }
+                indicator2 = true
 
-                    val selectedImage = data.data
-                    val type = data.getIntExtra("type",
-                        TYPE_CHOOSE_PHOTO_CODE4PERSON1
-                    )
-                    Log.d(
-                        TAG,
-                        "select uri:" + selectedImage.toString() + "type: " + type
-                    )
-                    getBitmap(type, selectedImage!!)
-              //  }
+            if (requestCode == REQUEST_PHOTO_CAMERA){
+                galleryAddPic()
+                if (isPerson1) {
+                    mBitmapPerson1 = data.extras!!.get("data") as Bitmap
+                    mImageViewPerson1.setImageBitmap(mBitmapPerson1)
+                    Log.e("Bitmap person 1", mBitmapPerson1.toString())
+                    mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON1)
+                } else {
+                    mBitmapPerson2 = data.extras!!.get("data") as Bitmap
+                    mImageViewPerson1.setImageBitmap(mBitmapPerson2)
+                    mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON2)
+                }
             }
+            if (requestCode == REQUEST_PHOTO_GALLERY){
+                val selectedImage = data.data
+                val type = data.getIntExtra("type",
+                    TYPE_CHOOSE_PHOTO_CODE4PERSON1
+                )
+                Log.d(
+                    TAG,
+                    "select uri:" + selectedImage.toString() + "type: " + type
+                )
+                getBitmap(type, selectedImage!!)
+            }
+
+        }
     }
 
 
@@ -288,21 +286,21 @@ class NewCompareActivity : AppCompatActivity() {
                         Log.e(TAG, "bitmap person1 is null !!!! ")
                         return
                     }
-                    mImageViewPerson1!!.setImageBitmap(mBitmapPerson1)
+                    mImageViewPerson1.setImageBitmap(mBitmapPerson1)
                 }
                 TYPE_CHOOSE_PHOTO_CODE4PERSON2 -> {
                     if (mBitmapPerson2 == null) {
                         Log.e(TAG, "bitmap person2 is null !!!! ")
                         return
                     }
-                    mImageViewPerson2!!.setImageBitmap(mBitmapPerson2)
+                    mImageViewPerson2.setImageBitmap(mBitmapPerson2)
                 }
                 TYPE_SHOW_RESULT -> {
                     val result = msg.obj as FaceCompareResult
 
-                    val result_percent = result.socre*100
-                    val result_float:String = String.format("%.2f",result_percent).toString()
-                    mTxtViewResult!!.text = " $result_float %"
+                    val resultPercent = result.socre * 100
+                    val resultFloat:String = String.format("%.2f",resultPercent).toString()
+                    mTxtViewResult!!.text = " $resultFloat %"
 
                     if (result.isSamePerson) {
                         toastx("This is the same person. Change photos !")
@@ -327,7 +325,8 @@ class NewCompareActivity : AppCompatActivity() {
   //      mTxtViewResult!!.text = "Is the same Person ??? "
         mTxtViewResult!!.text = " "
         synchronized(mWaitResult) {
-            mWaitResult.notifyAll() }
+            mWaitResult.notifyAll()
+        }
     }
 
     private val mThread = Thread(Runnable {
@@ -361,8 +360,6 @@ class NewCompareActivity : AppCompatActivity() {
         }
     })
 
-
-
     private fun requestPermissionsCamera() {
         try {
             val permissionCamera = ActivityCompat.checkSelfPermission(
@@ -380,6 +377,4 @@ class NewCompareActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
-
 }

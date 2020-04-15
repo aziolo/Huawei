@@ -51,10 +51,11 @@ class FamilyTreeFragment : Fragment() {
         val node6 = Node(getNodeText())
 
         graph.addEdge(node1, node2)
+        graph.addEdge(node1, node6)
         graph.addEdge(node1, node3)
         graph.addEdge(node2, node4)
         graph.addEdge(node2, node5)
-        graph.addEdge(node1, node6)
+
 
 
 
