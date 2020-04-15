@@ -51,35 +51,37 @@
 
     <ImageView
         android:id="@+id/imgViewPerson1"
-        android:layout_width="210dp"
-        android:layout_height="170dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_Person1"
-        app:srcCompat="@drawable/ic_accessibility_black_24dp" />
+        app:srcCompat="@drawable/user" />
 
     <ImageView
         android:id="@+id/imgViewPerson2"
-        android:layout_width="210dp"
-        android:layout_height="170dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_Person2"
-        app:srcCompat="@drawable/ic_accessibility_black_24dp" />
+        app:srcCompat="@drawable/user" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/person_2_card"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgViewPerson2"
-        app:layout_constraintStart_toEndOf="@+id/imgViewPerson2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgViewPerson2">>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,13 +120,13 @@
         android:id="@+id/person_1_card"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgViewPerson1"
-        app:layout_constraintStart_toEndOf="@+id/imgViewPerson1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imgViewPerson1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -238,13 +240,13 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="127dp"
                 android:layout_height="63dp"
-                android:layout_marginStart="96dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/rounded_edge"
                 android:onClick="onClickButton"
                 android:text="@string/btn_accept"
                 android:textColor="@android:color/background_light"
-                app:layout_constraintStart_toEndOf="@+id/btn_Repeat"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_result" />
 
             <Button

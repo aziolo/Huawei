@@ -148,8 +148,8 @@ class NewCompareActivity : AppCompatActivity() {
                 mCardViewResult.isVisible = false
                 mCardViewPerson1.isVisible = true
                 mCardViewPerson2.isVisible = true
-                mImageViewPerson1.setImageResource(R.drawable.ic_accessibility_black_24dp)
-                mImageViewPerson2.setImageResource(R.drawable.ic_accessibility_black_24dp)
+                mImageViewPerson1.setImageResource(R.drawable.user)
+                mImageViewPerson2.setImageResource(R.drawable.user)
                 Indicator_1 = false
                 Indicator_2 = false
             }

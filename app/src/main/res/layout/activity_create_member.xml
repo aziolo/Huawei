@@ -46,10 +46,11 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
 
+                    android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_title_new"
-                    app:srcCompat="@drawable/ic_accessibility_black_24dp" />
+                    app:srcCompat="@drawable/user" />
 
                 <TextView
                     android:id="@+id/text_import"
@@ -72,7 +73,8 @@
                     android:onClick="onClickButton"
                     android:src="@drawable/ic_photo_library_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/text_import"
-                    app:layout_constraintStart_toEndOf="@+id/text_import" />
+                    app:layout_constraintStart_toEndOf="@+id/text_import"
+                    app:layout_constraintTop_toTopOf="@+id/text_import" />
 
 
                 <TextView
@@ -184,7 +186,8 @@
                     android:onClick="onClickButton"
                     android:src="@drawable/ic_event_black_24dp"
                     app:layout_constraintBottom_toBottomOf="@+id/input_date_of_birth"
-                    app:layout_constraintEnd_toStartOf="@+id/input_date_of_birth" />
+                    app:layout_constraintEnd_toStartOf="@+id/input_date_of_birth"
+                    app:layout_constraintTop_toTopOf="@+id/input_date_of_birth" />
 
                 <Button
                     android:id="@+id/button_save_member"

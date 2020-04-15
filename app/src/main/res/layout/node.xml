@@ -20,7 +20,7 @@
             android:id="@+id/tree_photo"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/ic_accessibility_black_24dp" />
+            app:srcCompat="@drawable/user" />
 
     </androidx.cardview.widget.CardView>
 
