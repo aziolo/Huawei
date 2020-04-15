@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         requestPermissionsStorage()
 
 
-        addtoDB()
+       // addtoDB()
 
 
     }

@@ -36,14 +36,18 @@ class GraphAdapter(private val fragment: FamilyTreeFragment, graph: Graph) :
         val holder = viewHolder as GraphViewHolder
         if (list.isNotEmpty() && position < list.size){
             val current = list[position]
-            holder.textView.text = current.firstName + " " + current.lastName
-            holder.photo.setImageBitmap(byteArrayToBitmap(current.photo))
+            holder.textViewH.text = current.firstName + " " + current.lastName
+            holder.photoH.setImageBitmap(byteArrayToBitmap(current.photo))
+  //          holder.textViewW.text = current.firstName + " " + current.lastName
+  //          holder.photoW.setImageBitmap(byteArrayToBitmap(current.photo))
         }
     }
 
     inner class GraphViewHolder(itemView: View) : ViewHolder(itemView) {
-        var textView: TextView = itemView.findViewById(R.id.textViewa)
-        var photo: ImageView = itemView.findViewById(R.id.tree_photo)
+        var textViewH: TextView = itemView.findViewById(R.id.textViewH)
+        var textViewW: TextView = itemView.findViewById(R.id.textViewW)
+        var photoH: ImageView = itemView.findViewById(R.id.tree_photoH)
+        var photoW: ImageView = itemView.findViewById(R.id.tree_photoW)
     }
 
     private fun byteArrayToBitmap(byteArray: ByteArray?): Bitmap? {

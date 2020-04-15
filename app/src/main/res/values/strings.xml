@@ -5,7 +5,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="family_tree">My family tree</string>
     <string name="similarity"> Me and my family latest similarity</string>
-    <string name="date"> date: </string>
+    <string name="date"> Date:  </string>
+    <string name="result"> Result:  </string>
 
 
     <!--New Member Activity -->
@@ -31,5 +32,6 @@
     <string name="result_textView">Result :</string>
     <string name="btn_repeat">Repeat</string>
     <string name="btn_accept">Accept</string>
+
 
 </resources>

@@ -43,15 +43,30 @@ class SimilarityAdapter(private val fragment: SimilarityFragment) :
     override fun onBindViewHolder(holder: ValueHolder, position: Int) {
         val current = list[position]
 
-        holder.me.setImageBitmap(byteArrayToBitmap(current.photo1))
-        holder.you.setImageBitmap(byteArrayToBitmap(current.photo2))
+        holder.me.setImageBitmap(byteArrayToBitmap(current.photo1)?.let { scaleBitmap(it) })
+        holder.you.setImageBitmap(byteArrayToBitmap(current.photo2)?.let { scaleBitmap(it) })
         holder.date.text = current.data
-        holder.value2.text = current.value.toString()
+        holder.value2.text = current.value.toString() + "%"
     }
 
     private fun byteArrayToBitmap(byteArray: ByteArray?): Bitmap? {
         val arrayInputStream = ByteArrayInputStream(byteArray)
         return BitmapFactory.decodeStream(arrayInputStream)
+    }
+
+    private fun scaleBitmap(input: Bitmap): Bitmap {
+        val currentWidth = input.width
+        val currentHeight = input.height
+        val currentPixels = currentWidth * currentHeight
+        val maxPixels = 512 * 512 / 4
+        if (currentPixels <= maxPixels) {
+            return input
+        }
+        val scaleFactor =
+            kotlin.math.sqrt(maxPixels / currentPixels.toDouble())
+        val newWidthPx = kotlin.math.floor(currentWidth * scaleFactor).toInt()
+        val newHeightPx = kotlin.math.floor(currentHeight * scaleFactor).toInt()
+        return Bitmap.createScaledBitmap(input, newWidthPx, newHeightPx, true)
     }
 
 

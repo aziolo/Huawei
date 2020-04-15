@@ -65,7 +65,7 @@ class SimilarityFragment : Fragment() {
 
         })
 
-        view.button.setOnClickListener {
+        view.btnSimilarity.setOnClickListener {
             val intent = Intent(context, NewCompareActivity::class.java)
             startActivityForResult(intent, 1)
         }
@@ -111,7 +111,7 @@ class SimilarityFragment : Fragment() {
     fun onClickButtonR(view: View) {
         val requestCode: Int
         when (view.id) {
-            R.id.button -> {
+            R.id.btnSimilarity -> {
                 val intent = Intent(context, NewCompareActivity::class.java)
                 startActivityForResult(intent, 1)
             }
