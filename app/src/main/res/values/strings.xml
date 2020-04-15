@@ -9,7 +9,7 @@
 
 
     <!--New Member Activity -->
-    <string name="add_new_member">Add new family member …</string>
+    <string name="add_new_member"> Add new family member …</string>
     <string name="import_from_gallery">Import from gallery *</string>
     <string name="name">Name *</string>
     <string name="surname">Surname</string>
@@ -31,4 +31,5 @@
     <string name="result_textView">Result :</string>
     <string name="btn_repeat">Repeat</string>
     <string name="btn_accept">Accept</string>
+
 </resources>

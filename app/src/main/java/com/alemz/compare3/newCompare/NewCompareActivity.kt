@@ -242,7 +242,7 @@ class NewCompareActivity : AppCompatActivity() {
                 val type = data.getIntExtra("type",
                     TYPE_CHOOSE_PHOTO_CODE4PERSON1
                 )
-                Log.d(
+                Log.e(
                     TAG,
                     "select uri:" + selectedImage.toString() + "type: " + type
                 )
