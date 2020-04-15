@@ -2,10 +2,10 @@ package com.alemz.compare3
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Environment
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
@@ -15,6 +15,12 @@ import com.alemz.compare3.data.AppDataBase
 import com.alemz.compare3.familyTree.FamilyTreeFragment
 import com.alemz.compare3.similarity.SimilarityFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStream
+import java.net.URI
+
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener, RelationshipFragment.OnFragmentInteractionListener, SimilarityFragment.OnFragmentInteractionListener {
@@ -55,29 +61,18 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
             e.printStackTrace()
         }
     }
+    private fun addtoDB(){
+        var dir: File = Environment.getDataDirectory()
+        var list = arrayListOf<String>("DCIM/Camera/IMG_20200415_093643",
+                                                        )
 
 
-//    private fun getBitmap(type: Int, imageUri: Uri) {
-//        val pathColumn = arrayOf(
-//            MediaStore.Images.Media.DATA
-//        )
-//        //Query the photo corresponding to the specified Uri from the system table
-//        val cursor =
-//            contentResolver.query(imageUri, pathColumn, null, null, null)
-//        cursor?.moveToFirst()
-//        val columnIndex = cursor!!.getColumnIndex(pathColumn[0])
-//        val picturePath = cursor.getString(columnIndex) //Get photo path
-//        cursor.close()
-//        if (isPerson1) {
-//            mBitmapPerson1 = BitmapFactory.decodeFile(picturePath)
-//            Log.e("Bitmap person 1", mBitmapPerson1.toString())
-//            mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON1)
-//        } else {
-//            mBitmapPerson2 = BitmapFactory.decodeFile(picturePath)
-//            mHandler.sendEmptyMessage(TYPE_CHOOSE_PHOTO_CODE4PERSON2)
-//        }
-//    }
 
+
+
+        var yourFile = File(dir, "DCIM/Camera/IMG_20200415_093643")
+        Toast.makeText(this, yourFile.path, Toast.LENGTH_LONG).show()
+    }
 
 
 }
