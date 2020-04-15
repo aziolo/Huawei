@@ -103,16 +103,24 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_surname" />
 
+                <TextView
+                    android:id="@+id/text_sex"
+                    style="@style/NameStyle"
+                    android:layout_width="wrap_content"
+                    android:text="@string/sex"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_birth" />
+
 
                 <TextView
                     android:id="@+id/text_connections"
                     style="@style/NameStyle"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="@string/Connections"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_birth" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_sex" />
 
                 <TextView
                     android:id="@+id/text_mother"
@@ -237,6 +245,27 @@
                     android:textStyle="italic"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_married" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_date_of_birth">
+
+                    <RadioButton
+                        android:id="@+id/female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female" />
+
+                    <RadioButton
+                        android:id="@+id/man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/man" />
+                </RadioGroup>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

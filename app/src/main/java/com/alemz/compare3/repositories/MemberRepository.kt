@@ -19,7 +19,7 @@ class MemberRepository (application: Application) {
         val db: AppDataBase = AppDataBase.invoke(application.applicationContext)
         dao = db.familyMemberDao()
         con = application.applicationContext
-        allMembers = dao.getAll()
+        allMembers = dao.getSex()
     }
 
     fun getAll(): LiveData<List<FamilyMember>> {
@@ -34,7 +34,7 @@ class MemberRepository (application: Application) {
             dao
         ).execute().get()
         for (i in a.indices){
-            list[i] = a[i].firstName+" "+a[i].lastName
+            list.add(i,a[i].firstName+" "+a[i].lastName)
         }
         list.plusAssign("none")
         return list
@@ -45,6 +45,17 @@ class MemberRepository (application: Application) {
             dao,
             con
         ).execute(member)
+    }
+
+    fun getBeloved(id: Long): FamilyMember {
+        return GetBelovedAsyncTask(
+            dao, id).execute().get()
+    }
+
+    fun getAllSex(sex:String): LiveData<List<FamilyMember>> {
+        return GetSexAsyncTask(
+            dao, sex
+        ).execute().get()
     }
 
 }
@@ -65,7 +76,7 @@ private class InsertMemberAsyncTask(val dao: FamilyMemberDao, val con: Context) 
 class GetAllAsyncTask(private val dao: FamilyMemberDao) :
     AsyncTask<Unit, Unit, LiveData<List<FamilyMember>>>() {
     override fun doInBackground(vararg params: Unit?): LiveData<List<FamilyMember>> {
-        return dao.getAll()
+        return dao.getSex()
     }
 }
 
@@ -74,6 +85,22 @@ class GetListAsyncTask(private val dao: FamilyMemberDao) :
     override fun doInBackground(vararg params: Unit?): List<FamilyMember> {
         return dao.getList()
     }
+}
+
+class GetBelovedAsyncTask(private val dao: FamilyMemberDao, private val id: Long) :
+    AsyncTask<Unit, Unit, FamilyMember>() {
+    override fun doInBackground(vararg params: Unit?): FamilyMember {
+        return dao.getBeloved(id)
+    }
+
+}
+
+class GetSexAsyncTask(private val dao: FamilyMemberDao, private val sex: String) :
+    AsyncTask<Unit, Unit, LiveData<List<FamilyMember>>>() {
+    override fun doInBackground(vararg params: Unit?): LiveData<List<FamilyMember>> {
+        return dao.getSex(sex)
+    }
+
 }
 
 

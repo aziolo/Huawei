@@ -12,4 +12,11 @@ class FTViewModel (application: Application): AndroidViewModel(application)  {
     fun getAll(): LiveData<List<FamilyMember>> {
         return memberRepository.getAll()
     }
+    fun getBeloved(id:Long): FamilyMember {
+        return memberRepository.getBeloved(id)
+    }
+    fun getSex(sex: String): LiveData<List<FamilyMember>>{
+        return memberRepository.getAllSex(sex)
+    }
+
 }

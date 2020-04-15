@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProviders
 import com.alemz.compare3.R
 import com.alemz.compare3.data.FamilyMember
@@ -36,18 +38,27 @@ class GraphAdapter(private val fragment: FamilyTreeFragment, graph: Graph) :
         val holder = viewHolder as GraphViewHolder
         if (list.isNotEmpty() && position < list.size){
             val current = list[position]
-            holder.textViewH.text = current.firstName + " " + current.lastName
-            holder.photoH.setImageBitmap(byteArrayToBitmap(current.photo))
-  //          holder.textViewW.text = current.firstName + " " + current.lastName
-  //          holder.photoW.setImageBitmap(byteArrayToBitmap(current.photo))
+
+            if (current.marriedTo !== null){
+                holder.card2.isVisible = true
+                val beloved = viewModel.getBeloved(current.uid)
+                holder.name2.text = beloved.firstName + "\n" + beloved.lastName
+                holder.photo2.setImageBitmap(byteArrayToBitmap(current.photo))
+            }
+            holder.card2.isVisible = false
+            holder.name1.text = current.firstName + "\n" + current.lastName
+            holder.photo1.setImageBitmap(byteArrayToBitmap(current.photo))
+
         }
     }
 
     inner class GraphViewHolder(itemView: View) : ViewHolder(itemView) {
-        var textViewH: TextView = itemView.findViewById(R.id.textViewH)
-        var textViewW: TextView = itemView.findViewById(R.id.textViewW)
-        var photoH: ImageView = itemView.findViewById(R.id.tree_photoH)
-        var photoW: ImageView = itemView.findViewById(R.id.tree_photoW)
+        var name1: TextView = itemView.findViewById(R.id.textViewH)
+        var name2: TextView = itemView.findViewById(R.id.textViewW)
+        var photo1: ImageView = itemView.findViewById(R.id.tree_photoH)
+        var photo2: ImageView = itemView.findViewById(R.id.tree_photoW)
+        var card1: CardView = itemView.findViewById(R.id.cardView_1)
+        var card2: CardView = itemView.findViewById(R.id.cardView_2)
     }
 
     private fun byteArrayToBitmap(byteArray: ByteArray?): Bitmap? {

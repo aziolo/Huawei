@@ -23,6 +23,9 @@
     <string name="info_TODELETE">*necessary &#xA;&#xD;**min one of them need to be selected</string>
     <string name="info">*necessary</string>
     <string name="info_2">**min one of them need to be selected</string>
+    <string name="man">M</string>
+    <string name="female">F</string>
+    <string name="sex">Sex *</string>
 
 
 

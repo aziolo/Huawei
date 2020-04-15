@@ -46,7 +46,7 @@ class SimilarityAdapter(private val fragment: SimilarityFragment) :
         holder.me.setImageBitmap(byteArrayToBitmap(current.photo1)?.let { scaleBitmap(it) })
         holder.you.setImageBitmap(byteArrayToBitmap(current.photo2)?.let { scaleBitmap(it) })
         holder.date.text = current.data
-        holder.value2.text = current.value.toString() + "%"
+        holder.value2.text = current.value.toString() + " %"
     }
 
     private fun byteArrayToBitmap(byteArray: ByteArray?): Bitmap? {

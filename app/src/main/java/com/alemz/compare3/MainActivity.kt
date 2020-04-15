@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         requestPermissionsStorage()
 
 
-       // addtoDB()
+        addtoDB()
 
 
     }
@@ -97,32 +97,31 @@ class MainActivity : AppCompatActivity(), FamilyTreeFragment.OnFragmentInteracti
         }
         for (i in 0 ..6){
             if (i == 0){
-                Toast.makeText(this, idlist[i].toString(), Toast.LENGTH_LONG).show()
-                val newMember = FamilyMember(idlist[i], "Ola", "Zioło", "1999-11-02",null , null,null , arr[i])
+                val newMember = FamilyMember(idlist[i], "Ola", "Zioło", "1999-11-02","F",null , null,idlist[1] , arr[i])
                 viewModel.insertMember(newMember)
             }
             if (i == 1){
-                val newMember = FamilyMember(idlist[i], "łukasz", "mrozowski", "1999-11-02",null , null,idlist[0], arr[i])
+                val newMember = FamilyMember(idlist[i], "łukasz", "mrozowski", "1999-11-02","M",null , null,idlist[0], arr[i])
                 viewModel.insertMember(newMember)
             }
             if (i == 2){
-                val newMember = FamilyMember(idlist[i], "Ola ", "szcz", "1999-11-02",idlist[1] , idlist[0],null , arr[i])
+                val newMember = FamilyMember(idlist[i], "Ola ", "szcz", "1999-11-02","F",idlist[1] , idlist[0],idlist[3] , arr[i])
                 viewModel.insertMember(newMember)
             }
             if (i == 3){
-                val newMember = FamilyMember(idlist[i], "bartek", "bbb", "1999-11-02",null , null,idlist[2] , arr[i])
+                val newMember = FamilyMember(idlist[i], "bartek", "bbb", "1999-11-02","M",null , null,idlist[2] , arr[i])
                 viewModel.insertMember(newMember)
             }
             if (i == 4){
-                val newMember = FamilyMember(idlist[i], "Ola", "sz 2", "1999-11-02",idlist[1] , idlist[0],null , arr[i])
+                val newMember = FamilyMember(idlist[i], "Ola", "sz 2", "1999-11-02","F",idlist[1] , idlist[0],null , arr[i])
                 viewModel.insertMember(newMember)
             }
             if (i == 5){
-                val newMember = FamilyMember(idlist[i], "nata", "kozak", "1999-11-02",idlist[1] , idlist[0],null , arr[i])
+                val newMember = FamilyMember(idlist[i], "nata", "kozak", "1999-11-02","F",idlist[1] , idlist[0],null , arr[i])
                 viewModel.insertMember(newMember)
             }
             if (i == 6){
-                val newMember = FamilyMember(idlist[i], "Ola", "Z 2", "1999-11-02", idlist[3] , idlist[2],null , arr[i])
+                val newMember = FamilyMember(idlist[i], "Ola", "Z 2", "1999-11-02","F",  idlist[3] , idlist[2],null , arr[i])
                 viewModel.insertMember(newMember)
             }
         }

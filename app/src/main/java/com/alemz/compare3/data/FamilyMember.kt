@@ -10,12 +10,13 @@ data class FamilyMember(
     @ColumnInfo(name = "first_name") val firstName: String,
     @ColumnInfo(name = "last_name") val lastName: String?,
     @ColumnInfo(name = "birth_date") val birth: String,
+    @ColumnInfo(name = "sex") val sex: String,
     @ColumnInfo(name = "father") val father: Long?,
     @ColumnInfo(name = "mother") val mother: Long?,
     @ColumnInfo(name = "married_to") val marriedTo: Long?,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val photo: ByteArray?
 ){
-    constructor() : this(0, "", "", "", 0, 0, 0, ByteArray(0))
+    constructor() : this(0, "", "", "","F", 0, 0, 0, ByteArray(0))
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

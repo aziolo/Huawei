@@ -43,6 +43,7 @@ class CreateMemberActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_member)
+        female.isChecked = true
         list = viewModel.getList()
         setSpinners()
 
@@ -112,6 +113,10 @@ class CreateMemberActivity : AppCompatActivity() {
     }
 
     private fun saveMember(){
+        var sex = "F"
+        if (female.isChecked) sex = "F"
+        if (man.isChecked) sex = "M"
+
         if (bitmap !== null) {
             val scaledBitmap = scaleBitmap(bitmap!!)
             if (scaledBitmap != bitmap) {
@@ -134,8 +139,8 @@ class CreateMemberActivity : AppCompatActivity() {
         val mother = UUID.randomUUID().mostSignificantBits
         val marriedTo = UUID.randomUUID().mostSignificantBits
 
-        if (firstName.isNotEmpty() && birth.isNotEmpty() && photo.isNotEmpty()) {
-            val newMember = FamilyMember(id, firstName, lastName, birth, father, mother, marriedTo, photo)
+        if (firstName.isNotEmpty() && birth.isNotEmpty() && photo.isNotEmpty() ) {
+            val newMember = FamilyMember(id, firstName, lastName, birth, sex, father, mother, marriedTo, photo)
             viewModel.insertMember(newMember)
             finish()
         }
