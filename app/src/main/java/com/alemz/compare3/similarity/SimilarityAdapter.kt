@@ -10,7 +10,7 @@ import com.alemz.compare3.R
 class SimilarityAdapter(private val fragment: SimilarityFragment) :
     RecyclerView.Adapter<SimilarityAdapter.ValueHolder>()
 {
-    
+
 
 
     inner class ValueHolder(view: View) : RecyclerView.ViewHolder(view) {
