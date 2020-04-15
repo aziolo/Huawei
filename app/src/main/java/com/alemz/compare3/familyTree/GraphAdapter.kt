@@ -34,9 +34,9 @@ class GraphAdapter(private val fragment: FamilyTreeFragment, graph: Graph) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, data: Any?, position: Int) {
         val holder = viewHolder as GraphViewHolder
-        if (list.isNotEmpty()){
+        if (list.isNotEmpty() && position < list.size){
             val current = list[position]
-          //  holder.textView.text = current.firstName + " " + current.lastName
+            holder.textView.text = current.firstName + " " + current.lastName
             holder.photo.setImageBitmap(byteArrayToBitmap(current.photo))
         }
     }

@@ -28,15 +28,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_menu" />
 
-    <ImageView
-        android:id="@+id/imageViewq"
-        android:layout_width="157dp"
-        android:layout_height="127dp"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="204dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_accessibility_black_24dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

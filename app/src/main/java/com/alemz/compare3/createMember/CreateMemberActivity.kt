@@ -130,9 +130,9 @@ class CreateMemberActivity : AppCompatActivity() {
         val firstName = input_name.text.toString()
         val lastName = input_surname.text.toString()
         val birth = input_date_of_birth.text.toString()
-        val father = input_father.toString()
-        val mother = input_mother.toString()
-        val marriedTo = input_married.toString()
+        val father = UUID.randomUUID().mostSignificantBits
+        val mother = UUID.randomUUID().mostSignificantBits
+        val marriedTo = UUID.randomUUID().mostSignificantBits
 
         if (firstName.isNotEmpty() && birth.isNotEmpty() && photo.isNotEmpty()) {
             val newMember = FamilyMember(id, firstName, lastName, birth, father, mother, marriedTo, photo)
